@@ -18,17 +18,17 @@ output "httpcode_5xx_id" {
   value       = signalfx_detector.httpcode_5xx.*.id
 }
 
-output "httpcode_4xx" {
+output "httpcode_4xx_id" {
   description = "id for detector httpcode_4xx"
   value       = signalfx_detector.httpcode_4xx.*.id
 }
 
-output "httpcode_target_5xx" {
+output "httpcode_target_5xx_id" {
   description = "id for detector httpcode_target_5xx"
   value       = signalfx_detector.httpcode_target_5xx.*.id
 }
 
-output "httpcode_target_4xx" {
+output "httpcode_target_4xx_id" {
   description = "id for detector httpcode_target_4xx"
   value       = signalfx_detector.httpcode_target_4xx.*.id
 }

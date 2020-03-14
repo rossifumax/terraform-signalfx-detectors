@@ -1,20 +1,20 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Alb heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Alb heartbeat"
 
-  program_text = <<-EOF
+	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('RequestCount', filter=filter('stat', 'sum') and filter('namespace', 'AWS/ApplicationELB') and ${module.filter-tags.filter_custom})
 		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-  EOF
+	EOF
 
-  rule {
-    description           = "has not reported in ${var.heartbeat_timeframe}"
-    severity              = "Critical"
-    detect_label          = "CRIT"
-    disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
-  }
+	rule {
+		description           = "has not reported in ${var.heartbeat_timeframe}"
+		severity              = "Critical"
+		detect_label          = "CRIT"
+		disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
+		notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
+	}
 }
 
 resource "signalfx_detector" "no_healthy_instances" {
@@ -73,7 +73,7 @@ resource "signalfx_detector" "latency" {
 		disabled              = coalesce(var.latency_disabled_warning, var.latency_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.latency_notifications_warning, var.latency_notifications, var.notifications)
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
+	}
 
 }
 
@@ -104,7 +104,7 @@ resource "signalfx_detector" "httpcode_5xx" {
 		disabled              = coalesce(var.httpcode_5xx_disabled_warning, var.httpcode_5xx_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.httpcode_5xx_notifications_warning, var.httpcode_5xx_notifications, var.notifications)
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
+	}
 
 }
 

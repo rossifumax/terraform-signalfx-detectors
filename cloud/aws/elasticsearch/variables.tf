@@ -165,7 +165,7 @@ variable "cpu_90_15min_notifications_critical" {
 variable "cpu_90_15min_aggregation_function" {
   description = "Aggregation function and group by for cpu_90_15min detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region','CacheClusterId','CacheNodeId'])"
+  default     = ".mean(by=['aws_region'])"
 }
 
 variable "cpu_90_15min_transformation_function" {

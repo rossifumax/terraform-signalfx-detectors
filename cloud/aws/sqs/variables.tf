@@ -59,67 +59,67 @@ variable "heartbeat_timeframe" {
 # Visible_messages detectors
 
 variable "visible_messages_disabled" {
-  description = "Disable all alerting rules for no healthy instances detector"
+  description = "Disable all alerting rules for visible_messages detector"
   type        = bool
   default     = null
 }
 
 variable "visible_messages_disabled_critical" {
-  description = "Disable critical alerting rule for no healthy instances detector"
+  description = "Disable critical alerting rule for visible_messages detector"
   type        = bool
   default     = null
 }
 
 variable "visible_messages_disabled_warning" {
-  description = "Disable warning alerting rule for no healthy instances detector"
+  description = "Disable warning alerting rule for visible_messages detector"
   type        = bool
   default     = null
 }
 
 variable "visible_messages_notifications" {
-  description = "Notification recipients list for every alerting rules of no healthy instances detector"
+  description = "Notification recipients list for every alerting rules of visible_messages detector"
   type        = list
   default     = []
 }
 
 variable "visible_messages_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of no healthy instances detector"
+  description = "Notification recipients list for warning alerting rule of visible_messages detector"
   type        = list
   default     = []
 }
 
 variable "visible_messages_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of no healthy instances detector"
+  description = "Notification recipients list for critical alerting rule of visible_messages detector"
   type        = list
   default     = []
 }
 
 variable "visible_messages_aggregation_function" {
-  description = "Aggregation function and group by for no healthy instances detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for visible_messages detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['aws_region','QueueName'])"
 }
 
 variable "visible_messages_transformation_function" {
-  description = "Transformation function for no healthy instances detector (mean, min, max)"
+  description = "Transformation function for visible_messages detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
 variable "visible_messages_transformation_window" {
-  description = "Transformation window for no healthy instances detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for visible_messages detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "30m"
 }
 
 variable "visible_messages_threshold_critical" {
-  description = "Critical threshold for no healthy instances detector"
+  description = "Critical threshold for visible_messages detector"
   type        = number
   default     = 2
 }
 
 variable "visible_messages_threshold_warning" {
-  description = "Warning threshold for no healthy instances detector"
+  description = "Warning threshold for visible_messages detector"
   type        = number
   default     = 1
 }

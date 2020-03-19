@@ -192,6 +192,18 @@ variable "latency_threshold_warning" {
   default     = 1
 }
 
+variable "latency_aperiodic_duration" {
+  description = "Duration for the latency block"
+  type        = string
+  default     = "10m"
+}
+
+variable "latency_aperiodic_percentage" {
+  description = "Percentage for the latency block"
+  type        = number
+  default     = 0.9
+}
+
 # Httpcode_5xx detectors
 
 variable "httpcode_5xx_disabled" {

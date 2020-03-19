@@ -59,69 +59,81 @@ variable "heartbeat_timeframe" {
 # Pct_errors detectors
 
 variable "pct_errors_disabled" {
-  description = "Disable all alerting rules for no healthy instances detector"
+  description = "Disable all alerting rules for pct_errors detector"
   type        = bool
   default     = null
 }
 
 variable "pct_errors_disabled_critical" {
-  description = "Disable critical alerting rule for no healthy instances detector"
+  description = "Disable critical alerting rule for pct_errors detector"
   type        = bool
   default     = null
 }
 
 variable "pct_errors_disabled_warning" {
-  description = "Disable warning alerting rule for no healthy instances detector"
+  description = "Disable warning alerting rule for pct_errors detector"
   type        = bool
   default     = null
 }
 
 variable "pct_errors_notifications" {
-  description = "Notification recipients list for every alerting rules of no healthy instances detector"
+  description = "Notification recipients list for every alerting rules of pct_errors detector"
   type        = list
   default     = []
 }
 
 variable "pct_errors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of no healthy instances detector"
+  description = "Notification recipients list for warning alerting rule of pct_errors detector"
   type        = list
   default     = []
 }
 
 variable "pct_errors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of no healthy instances detector"
+  description = "Notification recipients list for critical alerting rule of pct_errors detector"
   type        = list
   default     = []
 }
 
 variable "pct_errors_aggregation_function" {
-  description = "Aggregation function and group by for no healthy instances detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for pct_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".sum(by=['aws_region','FunctionName'])"
 }
 
 variable "pct_errors_transformation_function" {
-  description = "Transformation function for no healthy instances detector (mean, min, max)"
+  description = "Transformation function for pct_errors detector (mean, min, max)"
   type        = string
   default     = "sum"
 }
 
 variable "pct_errors_transformation_window" {
-  description = "Transformation window for no healthy instances detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for pct_errors detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "1h"
 }
 
 variable "pct_errors_threshold_critical" {
-  description = "Critical threshold for no healthy instances detector"
+  description = "Critical threshold for pct_errors detector"
   type        = number
   default     = 30
 }
 
 variable "pct_errors_threshold_warning" {
-  description = "Warning threshold for no healthy instances detector"
+  description = "Warning threshold for pct_errors detector"
   type        = number
   default     = 20
+}
+
+variable "pct_errors_aperiodic_duration" {
+  description = "Duration for the pct_errors block"
+  type        = string
+  default     = "10m"
+}
+
+variable "pct_errors_aperiodic_percentage" {
+  description = "Percentage for the pct_errors block"
+  type        = number
+  default     = 0.9
 }
 
 # Errors detectors
@@ -192,6 +204,18 @@ variable "errors_threshold_warning" {
   default     = 1
 }
 
+variable "errors_aperiodic_duration" {
+  description = "Duration for the errors block"
+  type        = string
+  default     = "10m"
+}
+
+variable "errors_aperiodic_percentage" {
+  description = "Percentage for the errors block"
+  type        = number
+  default     = 0.9
+}
+
 # Throttles detectors
 
 variable "throttles_disabled" {
@@ -260,6 +284,18 @@ variable "throttles_threshold_warning" {
   default     = 1
 }
 
+variable "throttles_aperiodic_duration" {
+  description = "Duration for the throttles block"
+  type        = string
+  default     = "10m"
+}
+
+variable "throttles_aperiodic_percentage" {
+  description = "Percentage for the throttles block"
+  type        = number
+  default     = 0.9
+}
+
 # invocations detectors
 
 variable "invocations_disabled" {
@@ -326,4 +362,16 @@ variable "invocations_threshold_warning" {
   description = "Warning threshold for invocations detector"
   type        = number
   default     = 2
+}
+
+variable "invocations_aperiodic_duration" {
+  description = "Duration for the invocations block"
+  type        = string
+  default     = "10m"
+}
+
+variable "invocations_aperiodic_percentage" {
+  description = "Percentage for the invocations block"
+  type        = number
+  default     = 0.9
 }

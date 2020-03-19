@@ -59,67 +59,67 @@ variable "heartbeat_timeframe" {
 # VPN_status detectors
 
 variable "vpn_status_disabled" {
-  description = "Disable all alerting rules for no healthy instances detector"
+  description = "Disable all alerting rules for vpn_status detector"
   type        = bool
   default     = null
 }
 
 variable "vpn_status_disabled_critical" {
-  description = "Disable critical alerting rule for no healthy instances detector"
+  description = "Disable critical alerting rule for vpn_status detector"
   type        = bool
   default     = null
 }
 
 variable "vpn_status_disabled_warning" {
-  description = "Disable warning alerting rule for no healthy instances detector"
+  description = "Disable warning alerting rule for vpn_status detector"
   type        = bool
   default     = null
 }
 
 variable "vpn_status_notifications" {
-  description = "Notification recipients list for every alerting rules of no healthy instances detector"
+  description = "Notification recipients list for every alerting rules of vpn_status detector"
   type        = list
   default     = []
 }
 
 variable "vpn_status_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of no healthy instances detector"
+  description = "Notification recipients list for warning alerting rule of vpn_status detector"
   type        = list
   default     = []
 }
 
 variable "vpn_status_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of no healthy instances detector"
+  description = "Notification recipients list for critical alerting rule of vpn_status detector"
   type        = list
   default     = []
 }
 
 variable "vpn_status_aggregation_function" {
-  description = "Aggregation function and group by for no healthy instances detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for vpn_status detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".min(by=['aws_region','TunnelIpAddress'])"
 }
 
 variable "vpn_status_transformation_function" {
-  description = "Transformation function for no healthy instances detector (mean, min, max)"
+  description = "Transformation function for vpn_status detector (mean, min, max)"
   type        = string
   default     = "max"
 }
 
 variable "vpn_status_transformation_window" {
-  description = "Transformation window for no healthy instances detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for vpn_status detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
 variable "vpn_status_threshold_critical" {
-  description = "Critical threshold for no healthy instances detector"
+  description = "Critical threshold for vpn_status detector"
   type        = number
   default     = 1
 }
 
 variable "vpn_status_threshold_warning" {
-  description = "Warning threshold for no healthy instances detector"
+  description = "Warning threshold for vpn_status detector"
   type        = number
   default     = 1
 }

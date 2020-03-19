@@ -59,67 +59,67 @@ variable "heartbeat_timeframe" {
 # CPU_90_15min detectors
 
 variable "cpu_90_15min_disabled" {
-  description = "Disable all alerting rules for no healthy instances detector"
+  description = "Disable all alerting rules for cpu_90_15min detector"
   type        = bool
   default     = null
 }
 
 variable "cpu_90_15min_disabled_critical" {
-  description = "Disable critical alerting rule for no healthy instances detector"
+  description = "Disable critical alerting rule for cpu_90_15min detector"
   type        = bool
   default     = null
 }
 
 variable "cpu_90_15min_disabled_warning" {
-  description = "Disable warning alerting rule for no healthy instances detector"
+  description = "Disable warning alerting rule for cpu_90_15min detector"
   type        = bool
   default     = null
 }
 
 variable "cpu_90_15min_notifications" {
-  description = "Notification recipients list for every alerting rules of no healthy instances detector"
+  description = "Notification recipients list for every alerting rules of cpu_90_15min detector"
   type        = list
   default     = []
 }
 
 variable "cpu_90_15min_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of no healthy instances detector"
+  description = "Notification recipients list for warning alerting rule of cpu_90_15min detector"
   type        = list
   default     = []
 }
 
 variable "cpu_90_15min_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of no healthy instances detector"
+  description = "Notification recipients list for critical alerting rule of cpu_90_15min detector"
   type        = list
   default     = []
 }
 
 variable "cpu_90_15min_aggregation_function" {
-  description = "Aggregation function and group by for no healthy instances detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for cpu_90_15min detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['aws_region'])"
 }
 
 variable "cpu_90_15min_transformation_function" {
-  description = "Transformation function for no healthy instances detector (mean, min, max)"
+  description = "Transformation function for cpu_90_15min detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
 variable "cpu_90_15min_transformation_window" {
-  description = "Transformation window for no healthy instances detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for cpu_90_15min detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "15m"
 }
 
 variable "cpu_90_15min_threshold_critical" {
-  description = "Critical threshold for no healthy instances detector"
+  description = "Critical threshold for cpu_90_15min detector"
   type        = number
   default     = 90
 }
 
 variable "cpu_90_15min_threshold_warning" {
-  description = "Warning threshold for no healthy instances detector"
+  description = "Warning threshold for cpu_90_15min detector"
   type        = number
   default     = 80
 }

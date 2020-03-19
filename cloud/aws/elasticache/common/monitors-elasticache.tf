@@ -52,7 +52,6 @@ resource "signalfx_detector" "max_connection" {
 	program_text = <<-EOF
 		signal = data('CurrConnections', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.max_connection_aggregation_function}.${var.max_connection_transformation_function}(over='${var.max_connection_transformation_window}')
 		detect(when(signal > ${var.max_connection_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.max_connection_threshold_warning})).publish('WARN')
 	EOF
 
 	rule {
@@ -64,15 +63,6 @@ resource "signalfx_detector" "max_connection" {
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
-	rule {
-		description           = "is too high > ${var.max_connection_threshold_warning}"
-		severity              = "Warning"
-		detect_label          = "WARN"
-		disabled              = coalesce(var.max_connection_disabled_warning, var.max_connection_disabled, var.detectors_disabled)
-		notifications         = coalescelist(var.max_connection_notifications_warning, var.max_connection_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-	}
-
 }
 
 resource "signalfx_detector" "no_connection" {
@@ -81,7 +71,6 @@ resource "signalfx_detector" "no_connection" {
 	program_text = <<-EOF
 		signal = data('CurrConnections', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.no_connection_aggregation_function}.${var.no_connection_transformation_function}(over='${var.no_connection_transformation_window}')
 		detect(when(signal <= ${var.no_connection_threshold_critical})).publish('CRIT')
-		detect(when(signal <= ${var.no_connection_threshold_warning})).publish('WARN')
 	EOF
 
 	rule {
@@ -90,15 +79,6 @@ resource "signalfx_detector" "no_connection" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.no_connection_disabled_critical, var.no_connection_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.no_connection_notifications_critical, var.no_connection_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-	}
-
-	rule {
-		description           = "is too low <= ${var.no_connection_threshold_warning}"
-		severity              = "Warning"
-		detect_label          = "WARN"
-		disabled              = coalesce(var.no_connection_disabled_warning, var.no_connection_disabled, var.detectors_disabled)
-		notifications         = coalescelist(var.no_connection_notifications_warning, var.no_connection_notifications, var.notifications)
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 

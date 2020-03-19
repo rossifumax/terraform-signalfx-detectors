@@ -59,67 +59,67 @@ variable "heartbeat_timeframe" {
 # Cluster_status detectors
 
 variable "cluster_status_disabled" {
-  description = "Disable all alerting rules for cluster status detector"
+  description = "Disable all alerting rules for cluster_status detector"
   type        = bool
   default     = null
 }
 
 variable "cluster_status_disabled_critical" {
-  description = "Disable critical alerting rule for cluster status detector"
+  description = "Disable critical alerting rule for cluster_status detector"
   type        = bool
   default     = null
 }
 
 variable "cluster_status_disabled_warning" {
-  description = "Disable warning alerting rule for cluster status detector"
+  description = "Disable warning alerting rule for cluster_status detector"
   type        = bool
   default     = null
 }
 
 variable "cluster_status_notifications" {
-  description = "Notification recipients list for every alerting rules of cluster status detector"
+  description = "Notification recipients list for every alerting rules of cluster_status detector"
   type        = list
   default     = []
 }
 
 variable "cluster_status_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cluster status detector"
+  description = "Notification recipients list for warning alerting rule of cluster_status detector"
   type        = list
   default     = []
 }
 
 variable "cluster_status_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of cluster status detector"
+  description = "Notification recipients list for critical alerting rule of cluster_status detector"
   type        = list
   default     = []
 }
 
 variable "cluster_status_aggregation_function" {
-  description = "Aggregation function and group by for cluster status detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for cluster_status detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['aws_region'])"
 }
 
 variable "cluster_status_transformation_function" {
-  description = "Transformation function for cluster status detector (mean, min, max)"
+  description = "Transformation function for cluster_status detector (mean, min, max)"
   type        = string
   default     = "max"
 }
 
 variable "cluster_status_transformation_window" {
-  description = "Transformation window for cluster status detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for cluster_status detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "30m"
 }
 
 variable "cluster_status_threshold_critical" {
-  description = "Critical threshold for cluster status detector"
+  description = "Critical threshold for cluster_status detector"
   type        = number
   default     = 2
 }
 
 variable "cluster_status_threshold_warning" {
-  description = "Warning threshold for cluster status detector"
+  description = "Warning threshold for cluster_status detector"
   type        = number
   default     = 1
 }

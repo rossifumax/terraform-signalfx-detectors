@@ -192,6 +192,12 @@ variable "too_much_4xx_threshold_warning" {
   default     = 5
 }
 
+variable "too_much_4xx_threshold_number_requests" {
+  description = "Number threshold for too_much_4xx detector"
+  type        = number
+  default     = 5
+}
+
 # Too_much_5xx detectors
 
 variable "too_much_5xx_disabled" {
@@ -256,6 +262,12 @@ variable "too_much_5xx_threshold_critical" {
 
 variable "too_much_5xx_threshold_warning" {
   description = "Warning threshold for too_much_5xx detector"
+  type        = number
+  default     = 5
+}
+
+variable "too_much_5xx_threshold_number_requests" {
+  description = "Number threshold for too_much_5xx detector"
   type        = number
   default     = 5
 }
@@ -328,6 +340,12 @@ variable "too_much_4xx_backend_threshold_warning" {
   default     = 5
 }
 
+variable "too_much_4xx_backend_threshold_number_requests" {
+  description = "Number threshold for too_much_4xx_backend detector"
+  type        = number
+  default     = 5
+}
+
 # too_much_5xx_backend detectors
 
 variable "too_much_5xx_backend_disabled" {
@@ -392,6 +410,12 @@ variable "too_much_5xx_backend_threshold_critical" {
 
 variable "too_much_5xx_backend_threshold_warning" {
   description = "Warning threshold for too_much_5xx_backend detector"
+  type        = number
+  default     = 5
+}
+
+variable "too_much_5xx_backend_threshold_number_requests" {
+  description = "Number threshold for too_much_5xx_backend detector"
   type        = number
   default     = 5
 }
@@ -462,4 +486,16 @@ variable "backend_latency_threshold_warning" {
   description = "Warning threshold for backend_latency detector"
   type        = number
   default     = 1
+}
+
+variable "backend_latency_aperiodic_duration" {
+  description = "Duration for the backend_latency block"
+  type        = string
+  default     = "10m"
+}
+
+variable "backend_latency_aperiodic_percentage" {
+  description = "Percentage for the backend_latency block"
+  type        = number
+  default     = 0.9
 }

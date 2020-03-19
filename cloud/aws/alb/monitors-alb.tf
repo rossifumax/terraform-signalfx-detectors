@@ -176,9 +176,9 @@ resource "signalfx_detector" "httpcode_target_4xx" {
 	program_text = <<-EOF
 		A = data('HTTPCode_Target_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}){var.httpcode_target_4xx_aggregation_function}
 		B = data('RequestCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}){var.httpcode_target_4xx_aggregation_function}
-		signal = (A/(B + 5)).scale(100).${var.httpcode_target_4xx_transformation_function}(over='${var.httpcode_target_4xx_transformation_window}')
-		detect(when(signal > ${var.httpcode_target_4xx_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.httpcode_target_4xx_threshold_warning})).publish('WARN')
+		signal = (A/B).scale(100).${var.httpcode_target_4xx_transformation_function}(over='${var.httpcode_target_4xx_transformation_window}')
+		detect(when(signal > ${var.httpcode_target_4xx_threshold_critical}) and when(B > ${var.httpcode_target_4xx_min_request_count})).publish('CRIT')
+		detect(when(signal > ${var.httpcode_target_4xx_threshold_warning})and when(B > ${var.httpcode_target_4xx_min_request_count})).publish('WARN')
 	EOF
 
 	rule {

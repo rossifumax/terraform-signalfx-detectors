@@ -52,6 +52,7 @@ resource "signalfx_detector" "latency" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB latency"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		signal = data('TargetResponseTime', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.latency_aggregation_function}.${var.latency_transformation_function}(over='${var.latency_transformation_window}')
 		above_or_below_detector(signal, ${var.latency_threshold_critical}, 'above', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.latency_threshold_warning}, 'above', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage})).publish('WARN')
@@ -81,13 +82,6 @@ resource "signalfx_detector" "httpcode_5xx" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB HTTP code 5xx"
 
 	program_text = <<-EOF
-		A = data('HTTPCode_ELB_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}){var.httpcode_5xx_aggregation_function}
-		B = data('RequestCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}){var.httpcode_5xx_aggregation_function}
-		signal = (A/(B + 5)).scale(100).${var.httpcode_5xx_transformation_function}(over='${var.httpcode_5xx_transformation_window}')
-		detect(when(signal > ${var.httpcode_5xx_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.httpcode_5xx_threshold_warning})).publish('WARN')
-
-		from signalfx.detectors.aperiodic import aperiodic
 		A = data('HTTPCode_ELB_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_5xx_aggregation_function}
 		B = data('RequestCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_5xx_aggregation_function}
 		signal = (A/B).scale(100).${var.httpcode_5xx_transformation_function}(over='${var.httpcode_5xx_transformation_window}')

@@ -52,11 +52,11 @@ resource "signalfx_detector" "too_much_4xx" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ELB 4xx errors"
 
 	program_text = <<-EOF
-		A = data('HTTPCode_ELB_4XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.too_much_4xx_aggregation_function}
-		B = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.too_much_4xx_aggregation_function}
-		signal = (A/ (B + 5)).scale(100).${var.too_much_4xx_transformation_function}(over='${var.too_much_4xx_transformation_window}')
-		detect(when(signal > ${var.too_much_4xx_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.too_much_4xx_threshold_warning})).publish('WARN')
+		A = data('HTTPCode_ELB_4XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_4xx_aggregation_function}
+		B = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_4xx_aggregation_function}
+		signal = (A/B).scale(100).${var.too_much_4xx_transformation_function}(over='${var.too_much_4xx_transformation_window}')
+		detect(when(signal > ${var.too_much_4xx_threshold_critical}) and when(B > ${var.too_much_4xx_threshold_number_requests})).publish('CRIT')
+		detect(when(signal > ${var.too_much_4xx_threshold_warning}) and when(B > ${var.too_much_4xx_threshold_number_requests})).publish('WARN')
 	EOF
 
 	rule {
@@ -83,11 +83,11 @@ resource "signalfx_detector" "too_much_5xx" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ELB 5xx errors"
 
 	program_text = <<-EOF
-		A = data('HTTPCode_ELB_5XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.too_much_5xx_aggregation_function}
-		B = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.too_much_5xx_aggregation_function}
-		signal = (A/ (B + 5)).scale(100).${var.too_much_5xx_transformation_function}(over='${var.too_much_5xx_transformation_window}')
-		detect(when(signal > ${var.too_much_5xx_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.too_much_5xx_threshold_warning})).publish('WARN')
+		A = data('HTTPCode_ELB_5XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_5xx_aggregation_function}
+		B = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_5xx_aggregation_function}
+		signal = (A/B).scale(100).${var.too_much_5xx_transformation_function}(over='${var.too_much_5xx_transformation_window}')
+		detect(when(signal > ${var.too_much_5xx_threshold_critical}) and when(B > ${var.too_much_5xx_threshold_number_requests})).publish('CRIT')
+		detect(when(signal > ${var.too_much_5xx_threshold_warning}) and when(B > ${var.too_much_5xx_threshold_number_requests})).publish('WARN')
 	EOF
 
 	rule {
@@ -114,11 +114,11 @@ resource "signalfx_detector" "too_much_4xx_backend" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ELB backend 4xx errors"
 
 	program_text = <<-EOF
-		A = data('HTTPCode_Backend_4XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.too_much_4xx_backend_aggregation_function}
-		B = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.too_much_4xx_backend_aggregation_function}
-		signal = (A/ (B + 5)).scale(100).${var.too_much_4xx_backend_transformation_function}(over='${var.too_much_4xx_backend_transformation_window}')
-		detect(when(signal > ${var.too_much_4xx_backend_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.too_much_4xx_backend_threshold_warning})).publish('WARN')
+		A = data('HTTPCode_Backend_4XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_4xx_backend_aggregation_function}
+		B = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_4xx_backend_aggregation_function}
+		signal = (A/B).scale(100).${var.too_much_4xx_backend_transformation_function}(over='${var.too_much_4xx_backend_transformation_window}')
+		detect(when(signal > ${var.too_much_4xx_backend_threshold_critical}) and when(B > ${var.too_much_4xx_backend_threshold_number_requests})).publish('CRIT')
+		detect(when(signal > ${var.too_much_4xx_backend_threshold_warning}) and when(B > ${var.too_much_4xx_backend_threshold_number_requests})).publish('WARN')
 	EOF
 
 	rule {
@@ -145,11 +145,11 @@ resource "signalfx_detector" "too_much_5xx_backend" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ELB backend 5xx errors"
 
 	program_text = <<-EOF
-		A = data('HTTPCode_Backend_5XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.too_much_5xx_backend_aggregation_function}
-		B = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.too_much_5xx_backend_aggregation_function}
-		signal = (A/ (B + 5)).scale(100).${var.too_much_5xx_backend_transformation_function}(over='${var.too_much_5xx_backend_transformation_window}')
-		detect(when(signal > ${var.too_much_5xx_backend_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.too_much_5xx_backend_threshold_warning})).publish('WARN')
+		A = data('HTTPCode_Backend_5XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_5xx_backend_aggregation_function}
+		B = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_5xx_backend_aggregation_function}
+		signal = (A/B).scale(100).${var.too_much_5xx_backend_transformation_function}(over='${var.too_much_5xx_backend_transformation_window}')
+		detect(when(signal > ${var.too_much_5xx_backend_threshold_critical}) and when(B > ${var.too_much_5xx_backend_threshold_number_requests})).publish('CRIT')
+		detect(when(signal > ${var.too_much_5xx_backend_threshold_warning}) and when(B > ${var.too_much_5xx_backend_threshold_number_requests})).publish('WARN')
 	EOF
 
 	rule {
@@ -176,9 +176,10 @@ resource "signalfx_detector" "backend_latency" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ELB backend latency"
 
 	program_text = <<-EOF
-		signal = data('Latency', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.backend_latency_aggregation_function}.${var.backend_latency_transformation_function}(over='${var.backend_latency_transformation_window}')
-		detect(when(signal > ${var.backend_latency_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.backend_latency_threshold_warning})).publish('WARN')
+		from signalfx.detectors.aperiodic import aperiodic
+		signal = data('Latency', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'mean') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.backend_latency_aggregation_function}.${var.backend_latency_transformation_function}(over='${var.backend_latency_transformation_window}')
+		above_or_below_detector(signal, ${var.backend_latency_threshold_critical}, ‘above’, lasting('${var.backend_latency_aperiodic_duration}', ${var.backend_latency_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.backend_latency_threshold_warning}, ‘above’, lasting('${var.backend_latency_aperiodic_duration}', ${var.backend_latency_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {

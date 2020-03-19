@@ -59,67 +59,67 @@ variable "heartbeat_timeframe" {
 # CPU_utilization detectors
 
 variable "cpu_utilization_disabled" {
-  description = "Disable all alerting rules for cpu utilization detector"
+  description = "Disable all alerting rules for cpu_utilization detector"
   type        = bool
   default     = null
 }
 
 variable "cpu_utilization_disabled_critical" {
-  description = "Disable critical alerting rule for cpu utilization detector"
+  description = "Disable critical alerting rule for cpu_utilization detector"
   type        = bool
   default     = null
 }
 
 variable "cpu_utilization_disabled_warning" {
-  description = "Disable warning alerting rule for cpu utilization detector"
+  description = "Disable warning alerting rule for cpu_utilization detector"
   type        = bool
   default     = null
 }
 
 variable "cpu_utilization_notifications" {
-  description = "Notification recipients list for every alerting rules of cpu utilization detector"
+  description = "Notification recipients list for every alerting rules of cpu_utilization detector"
   type        = list
   default     = []
 }
 
 variable "cpu_utilization_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cpu utilization detector"
+  description = "Notification recipients list for warning alerting rule of cpu_utilization detector"
   type        = list
   default     = []
 }
 
 variable "cpu_utilization_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of cpu utilization detector"
+  description = "Notification recipients list for critical alerting rule of cpu_utilization detector"
   type        = list
   default     = []
 }
 
 variable "cpu_utilization_aggregation_function" {
-  description = "Aggregation function and group by for cpu utilization detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for cpu_utilization detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['aws_region','ClusterName'])"
 }
 
 variable "cpu_utilization_transformation_function" {
-  description = "Transformation function for cpu utilization detector (mean, min, max)"
+  description = "Transformation function for cpu_utilization detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
 variable "cpu_utilization_transformation_window" {
-  description = "Transformation window for cpu utilization detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for cpu_utilization detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
 variable "cpu_utilization_threshold_critical" {
-  description = "Critical threshold for cpu utilization detector"
+  description = "Critical threshold for cpu_utilization detector"
   type        = number
   default     = 90
 }
 
 variable "cpu_utilization_threshold_warning" {
-  description = "Warning threshold for cpu utilization detector"
+  description = "Warning threshold for cpu_utilization detector"
   type        = number
   default     = 85
 }
@@ -127,67 +127,67 @@ variable "cpu_utilization_threshold_warning" {
 # Memory_reservation detectors
 
 variable "memory_reservation_disabled" {
-  description = "Disable all alerting rules for memory reservation detector"
+  description = "Disable all alerting rules for memory_reservation detector"
   type        = bool
   default     = null
 }
 
 variable "memory_reservation_disabled_critical" {
-  description = "Disable critical alerting rule for memory reservation detector"
+  description = "Disable critical alerting rule for memory_reservation detector"
   type        = bool
   default     = null
 }
 
 variable "memory_reservation_disabled_warning" {
-  description = "Disable warning alerting rule for memory reservation detector"
+  description = "Disable warning alerting rule for memory_reservation detector"
   type        = bool
   default     = null
 }
 
 variable "memory_reservation_notifications" {
-  description = "Notification recipients list for every alerting rules of memory reservation detector"
+  description = "Notification recipients list for every alerting rules of memory_reservation detector"
   type        = list
   default     = []
 }
 
 variable "memory_reservation_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of memory reservation detector"
+  description = "Notification recipients list for warning alerting rule of memory_reservation detector"
   type        = list
   default     = []
 }
 
 variable "memory_reservation_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of memory reservation detector"
+  description = "Notification recipients list for critical alerting rule of memory_reservation detector"
   type        = list
   default     = []
 }
 
 variable "memory_reservation_aggregation_function" {
-  description = "Aggregation function and group by for memory reservation detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for memory_reservation detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['aws_region','ClusterName'])"
 }
 
 variable "memory_reservation_transformation_function" {
-  description = "Transformation function for memory reservation detector (mean, min, max)"
+  description = "Transformation function for memory_reservation detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
 variable "memory_reservation_transformation_window" {
-  description = "Transformation window for memory reservation detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for memory_reservation detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
 variable "memory_reservation_threshold_critical" {
-  description = "Critical threshold for memory reservation detector"
+  description = "Critical threshold for memory_reservation detector"
   type        = number
   default     = 90
 }
 
 variable "memory_reservation_threshold_warning" {
-  description = "Warning threshold for memory reservation detector"
+  description = "Warning threshold for memory_reservation detector"
   type        = number
   default     = 85
 }

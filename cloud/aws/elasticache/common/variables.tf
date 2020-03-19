@@ -127,67 +127,67 @@ variable "evictions_threshold_warning" {
 # Max_connection detectors
 
 variable "max_connection_disabled" {
-  description = "Disable all alerting rules for max connection detector"
+  description = "Disable all alerting rules for max_connection detector"
   type        = bool
   default     = null
 }
 
 variable "max_connection_disabled_critical" {
-  description = "Disable critical alerting rule for max connection detector"
+  description = "Disable critical alerting rule for max_connection detector"
   type        = bool
   default     = null
 }
 
 variable "max_connection_disabled_warning" {
-  description = "Disable warning alerting rule for httpcode 5xx erros detector"
+  description = "Disable warning alerting rule for max_connection detector"
   type        = bool
   default     = null
 }
 
 variable "max_connection_notifications" {
-  description = "Notification recipients list for every alerting rules of max connection detector"
+  description = "Notification recipients list for every alerting rules of max_connection detector"
   type        = list
   default     = []
 }
 
 variable "max_connection_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of max connection detector"
+  description = "Notification recipients list for warning alerting rule of max_connection detector"
   type        = list
   default     = []
 }
 
 variable "max_connection_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of max connection detector"
+  description = "Notification recipients list for critical alerting rule of max_connection detector"
   type        = list
   default     = []
 }
 
 variable "max_connection_aggregation_function" {
-  description = "Aggregation function and group by for max connection detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for max_connection detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['aws_region','CacheClusterId','CacheNodeId'])"
 }
 
 variable "max_connection_transformation_function" {
-  description = "Transformation function for max connection detector (mean, min, max)"
+  description = "Transformation function for max_connection detector (mean, min, max)"
   type        = string
   default     = "max"
 }
 
 variable "max_connection_transformation_window" {
-  description = "Transformation window for max connection detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for max_connection detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
 variable "max_connection_threshold_critical" {
-  description = "Critical threshold for max connection detector"
+  description = "Critical threshold for max_connection detector"
   type        = number
   default     = 65000
 }
 
 variable "max_connection_threshold_warning" {
-  description = "Warning threshold for max connection detector"
+  description = "Warning threshold for max_connection detector"
   type        = number
   default     = 50000
 }
@@ -195,67 +195,67 @@ variable "max_connection_threshold_warning" {
 # No_connection detectors
 
 variable "no_connection_disabled" {
-  description = "Disable all alerting rules for no connection detector"
+  description = "Disable all alerting rules for no_connection detector"
   type        = bool
   default     = null
 }
 
 variable "no_connection_disabled_critical" {
-  description = "Disable critical alerting rule for no connection detector"
+  description = "Disable critical alerting rule for no_connection detector"
   type        = bool
   default     = null
 }
 
 variable "no_connection_disabled_warning" {
-  description = "Disable warning alerting rule for no connection detector"
+  description = "Disable warning alerting rule for no_connection detector"
   type        = bool
   default     = null
 }
 
 variable "no_connection_notifications" {
-  description = "Notification recipients list for every alerting rules of no connection detector"
+  description = "Notification recipients list for every alerting rules of no_connection detector"
   type        = list
   default     = []
 }
 
 variable "no_connection_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of no connection detector"
+  description = "Notification recipients list for warning alerting rule of no_connection detector"
   type        = list
   default     = []
 }
 
 variable "no_connection_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of no connection detector"
+  description = "Notification recipients list for critical alerting rule of no_connection detector"
   type        = list
   default     = []
 }
 
 variable "no_connection_aggregation_function" {
-  description = "Aggregation function and group by for no connection detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for no_connection detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['aws_region','CacheClusterId','CacheNodeId'])"
 }
 
 variable "no_connection_transformation_function" {
-  description = "Transformation function for no connection detector (mean, min, max)"
+  description = "Transformation function for no_connection detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
 variable "no_connection_transformation_window" {
-  description = "Transformation window for no connection detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for no_connection detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
 variable "no_connection_threshold_critical" {
-  description = "Critical threshold for no connection detector"
+  description = "Critical threshold for no_connection detector"
   type        = number
   default     = 0
 }
 
 variable "no_connection_threshold_warning" {
-  description = "Warning threshold for no connection detector"
+  description = "Warning threshold for no_connection detector"
   type        = number
   default     = 0
 }
@@ -331,67 +331,67 @@ variable "swap_threshold_warning" {
 # Free_memory detectors
 
 variable "free_memory_disabled" {
-  description = "Disable all alerting rules for free memory detector"
+  description = "Disable all alerting rules for free_memory detector"
   type        = bool
   default     = null
 }
 
 variable "free_memory_disabled_critical" {
-  description = "Disable critical alerting rule for free memory detector"
+  description = "Disable critical alerting rule for free_memory detector"
   type        = bool
   default     = null
 }
 
 variable "free_memory_disabled_warning" {
-  description = "Disable warning alerting rule for free memory detector"
+  description = "Disable warning alerting rule for free_memory detector"
   type        = bool
   default     = null
 }
 
 variable "free_memory_notifications" {
-  description = "Notification recipients list for every alerting rules of free memory detector"
+  description = "Notification recipients list for every alerting rules of free_memory detector"
   type        = list
   default     = []
 }
 
 variable "free_memory_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of free memory detector"
+  description = "Notification recipients list for warning alerting rule of free_memory detector"
   type        = list
   default     = []
 }
 
 variable "free_memory_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of free memory detector"
+  description = "Notification recipients list for critical alerting rule of free_memory detector"
   type        = list
   default     = []
 }
 
 variable "free_memory_aggregation_function" {
-  description = "Aggregation function and group by for free memory detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for free_memory detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['aws_region','CacheClusterId','CacheNodeId'])"
 }
 
 variable "free_memory_transformation_function" {
-  description = "Transformation function for free memory detector (mean, min, max)"
+  description = "Transformation function for free_memory detector (mean, min, max)"
   type        = string
   default     = "mean"
 }
 
 variable "free_memory_transformation_window" {
-  description = "Transformation window for free memory detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for free_memory detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "15m"
 }
 
 variable "free_memory_threshold_critical" {
-  description = "Critical threshold for free memory detector"
+  description = "Critical threshold for free_memory detector"
   type        = number
   default     = -70
 }
 
 variable "free_memory_threshold_warning" {
-  description = "Warning threshold for free memory detector"
+  description = "Warning threshold for free_memory detector"
   type        = number
   default     = -50
 }
@@ -399,67 +399,67 @@ variable "free_memory_threshold_warning" {
 # Evictions_growing detectors
 
 variable "evictions_growing_disabled" {
-  description = "Disable all alerting rules for evictions growing detector"
+  description = "Disable all alerting rules for evictions_growing detector"
   type        = bool
   default     = null
 }
 
 variable "evictions_growing_disabled_critical" {
-  description = "Disable critical alerting rule for evictions growing detector"
+  description = "Disable critical alerting rule for evictions_growing detector"
   type        = bool
   default     = null
 }
 
 variable "evictions_growing_disabled_warning" {
-  description = "Disable warning alerting rule for evictions growing detector"
+  description = "Disable warning alerting rule for evictions_growing detector"
   type        = bool
   default     = null
 }
 
 variable "evictions_growing_notifications" {
-  description = "Notification recipients list for every alerting rules of evictions growing detector"
+  description = "Notification recipients list for every alerting rules of evictions_growing detector"
   type        = list
   default     = []
 }
 
 variable "evictions_growing_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of evictions growing detector"
+  description = "Notification recipients list for warning alerting rule of evictions_growing detector"
   type        = list
   default     = []
 }
 
 variable "evictions_growing_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of evictions growing detector"
+  description = "Notification recipients list for critical alerting rule of evictions_growing detector"
   type        = list
   default     = []
 }
 
 variable "evictions_growing_aggregation_function" {
-  description = "Aggregation function and group by for evictions growing detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for evictions_growing detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['aws_region','CacheClusterId','CacheNodeId'])"
 }
 
 variable "evictions_growing_transformation_function" {
-  description = "Transformation function for evictions growing detector (mean, min, max)"
+  description = "Transformation function for evictions_growing detector (mean, min, max)"
   type        = string
   default     = "mean"
 }
 
 variable "evictions_growing_transformation_window" {
-  description = "Transformation window for evictions growing detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for evictions_growing detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
 variable "evictions_growing_threshold_critical" {
-  description = "Critical threshold for evictions growing detector"
+  description = "Critical threshold for evictions_growing detector"
   type        = number
   default     = 30
 }
 
 variable "evictions_growing_threshold_warning" {
-  description = "Warning threshold for evictions growing detector"
+  description = "Warning threshold for evictions_growing detector"
   type        = number
   default     = 10
 }

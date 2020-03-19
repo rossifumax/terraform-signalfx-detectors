@@ -124,16 +124,28 @@ variable "latency_threshold_warning" {
   default     = 1000
 }
 
+variable "latency_aperiodic_duration" {
+  description = "Duration for the latency block"
+  type        = string
+  default     = "10m"
+}
+
+variable "latency_aperiodic_percentage" {
+  description = "Percentage for the latency block"
+  type        = number
+  default     = 0.9
+}
+
 # Httpcode_5xx_errors detectors
 
 variable "httpcode_5xx_errors_disabled" {
-  description = "Disable all alerting rules for httpcode 5xx errors detector"
+  description = "Disable all alerting rules for httpcode_5xx_errors detector"
   type        = bool
   default     = null
 }
 
 variable "httpcode_5xx_errors_disabled_critical" {
-  description = "Disable critical alerting rule for httpcode 5xx errors detector"
+  description = "Disable critical alerting rule for httpcode_5xx_errors detector"
   type        = bool
   default     = null
 }
@@ -145,117 +157,129 @@ variable "httpcode_5xx_errors_disabled_warning" {
 }
 
 variable "httpcode_5xx_errors_notifications" {
-  description = "Notification recipients list for every alerting rules of httpcode 5xx errors detector"
+  description = "Notification recipients list for every alerting rules of httpcode_5xx_errors detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_5xx_errors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of httpcode 5xx errors detector"
+  description = "Notification recipients list for warning alerting rule of httpcode_5xx_errors detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_5xx_errors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of httpcode 5xx errors detector"
+  description = "Notification recipients list for critical alerting rule of httpcode_5xx_errors detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_5xx_errors_aggregation_function" {
-  description = "Aggregation function and group by for httpcode 5xx errors detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for httpcode_5xx_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['aws_region'])"
 }
 
 variable "httpcode_5xx_errors_transformation_function" {
-  description = "Transformation function for httpcode 5xx errors detector (mean, min, max)"
+  description = "Transformation function for httpcode_5xx_errors detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
 variable "httpcode_5xx_errors_transformation_window" {
-  description = "Transformation window for httpcode 5xx errors detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for httpcode_5xx_errors detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
 variable "httpcode_5xx_errors_threshold_critical" {
-  description = "Critical threshold for httpcode 5xx errors detector"
+  description = "Critical threshold for httpcode_5xx_errors detector"
   type        = number
   default     = 20
 }
 
 variable "httpcode_5xx_errors_threshold_warning" {
-  description = "Warning threshold for httpcode 5xx errors detector"
+  description = "Warning threshold for httpcode_5xx_errors detector"
   type        = number
   default     = 10
+}
+
+variable "httpcode_5xx_errors_threshold_number_requests" {
+  description = "Number threshold for httpcode_5xx_errors detector"
+  type        = number
+  default     = 5
 }
 
 # Httpcode_4xx_errors detectors
 
 variable "httpcode_4xx_errors_disabled" {
-  description = "Disable all alerting rules for httpcode 4xx errors detector"
+  description = "Disable all alerting rules for httpcode_4xx_errors detector"
   type        = bool
   default     = null
 }
 
 variable "httpcode_4xx_errors_disabled_critical" {
-  description = "Disable critical alerting rule for httpcode 4xx errors detector"
+  description = "Disable critical alerting rule for httpcode_4xx_errors detector"
   type        = bool
   default     = null
 }
 
 variable "httpcode_4xx_errors_disabled_warning" {
-  description = "Disable warning alerting rule for httpcode 4xx errors detector"
+  description = "Disable warning alerting rule for httpcode_4xx_errors detector"
   type        = bool
   default     = null
 }
 
 variable "httpcode_4xx_errors_notifications" {
-  description = "Notification recipients list for every alerting rules of httpcode 4xx errors detector"
+  description = "Notification recipients list for every alerting rules of httpcode_4xx_errors detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_4xx_errors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of httpcode 4xx errors detector"
+  description = "Notification recipients list for warning alerting rule of httpcode_4xx_errors detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_4xx_errors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of httpcode 4xx errors detector"
+  description = "Notification recipients list for critical alerting rule of httpcode_4xx_errors detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_4xx_errors_aggregation_function" {
-  description = "Aggregation function and group by for httpcode 4xx errors detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for httpcode_4xx_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['aws_region'])"
 }
 
 variable "httpcode_4xx_errors_transformation_function" {
-  description = "Transformation function for httpcode 4xx errors detector (mean, min, max)"
+  description = "Transformation function for httpcode_4xx_errors detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
 variable "httpcode_4xx_errors_transformation_window" {
-  description = "Transformation window for httpcode 4xx errors detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for httpcode_4xx_errors detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
 variable "httpcode_4xx_errors_threshold_critical" {
-  description = "Critical threshold for httpcode 4xx errors detector"
+  description = "Critical threshold for httpcode_4xx_errors detector"
   type        = number
   default     = 30
 }
 
 variable "httpcode_4xx_errors_threshold_warning" {
-  description = "Warning threshold for httpcode 4xx errors detector"
+  description = "Warning threshold for httpcode_4xx_errors detector"
   type        = number
   default     = 15
+}
+
+variable "httpcode_4xx_errors_threshold_number_requests" {
+  description = "Number threshold for httpcode_4xx_errors detector"
+  type        = number
+  default     = 5
 }

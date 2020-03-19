@@ -59,67 +59,67 @@ variable "heartbeat_timeframe" {
 # no_healthy_instances detectors
 
 variable "no_healthy_instances_disabled" {
-  description = "Disable all alerting rules for no healthy instances detector"
+  description = "Disable all alerting rules for no_healthy_instances detector"
   type        = bool
   default     = null
 }
 
 variable "no_healthy_instances_disabled_critical" {
-  description = "Disable critical alerting rule for no healthy instances detector"
+  description = "Disable critical alerting rule for no_healthy_instances detector"
   type        = bool
   default     = null
 }
 
 variable "no_healthy_instances_disabled_warning" {
-  description = "Disable warning alerting rule for no healthy instances detector"
+  description = "Disable warning alerting rule for no_healthy_instances detector"
   type        = bool
   default     = null
 }
 
 variable "no_healthy_instances_notifications" {
-  description = "Notification recipients list for every alerting rules of no healthy instances detector"
+  description = "Notification recipients list for every alerting rules of no_healthy_instances detector"
   type        = list
   default     = []
 }
 
 variable "no_healthy_instances_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of no healthy instances detector"
+  description = "Notification recipients list for warning alerting rule of no_healthy_instances detector"
   type        = list
   default     = []
 }
 
 variable "no_healthy_instances_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of no healthy instances detector"
+  description = "Notification recipients list for critical alerting rule of no_healthy_instances detector"
   type        = list
   default     = []
 }
 
 variable "no_healthy_instances_aggregation_function" {
-  description = "Aggregation function and group by for no healthy instances detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for no_healthy_instances detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".sum(by=['aws_region','LoadBalancerName'])"
 }
 
 variable "no_healthy_instances_transformation_function" {
-  description = "Transformation function for no healthy instances detector (mean, min, max)"
+  description = "Transformation function for no_healthy_instances detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
 variable "no_healthy_instances_transformation_window" {
-  description = "Transformation window for no healthy instances detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for no_healthy_instances detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
 variable "no_healthy_instances_threshold_critical" {
-  description = "Critical threshold for no healthy instances detector"
+  description = "Critical threshold for no_healthy_instances detector"
   type        = number
   default     = 1
 }
 
 variable "no_healthy_instances_threshold_warning" {
-  description = "Warning threshold for no healthy instances detector"
+  description = "Warning threshold for no_healthy_instances detector"
   type        = number
   default     = 100
 }

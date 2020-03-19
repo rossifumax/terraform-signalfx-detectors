@@ -21,11 +21,12 @@ resource "signalfx_detector" "pct_errors" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Lambda Percentage of errors"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		A = data('Errors', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.pct_errors_aggregation_function}
 		B = data('Invocations', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.pct_errors_aggregation_function}
 		signal = (A/B).scale(100).${var.pct_errors_transformation_function}(over='${var.pct_errors_transformation_window}')
-		detect(when(signal > ${var.pct_errors_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.pct_errors_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.pct_errors_threshold_critical}, ‘above’, lasting('${var.pct_errors_aperiodic_duration}', ${var.pct_errors_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.pct_errors_threshold_warning}, ‘above’, lasting('${var.pct_errors_aperiodic_duration}', ${var.pct_errors_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -52,9 +53,10 @@ resource "signalfx_detector" "errors" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Lambda Number of errors"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		signal = data('Errors', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.errors_aggregation_function}.${var.errors_transformation_function}(over='${var.errors_transformation_window}')
-		detect(when(signal > ${var.errors_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.errors_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.errors_threshold_critical}, ‘above’, lasting('${var.errors_aperiodic_duration}', ${var.errors_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.errors_threshold_warning}, ‘above’, lasting('${var.errors_aperiodic_duration}', ${var.errors_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -81,9 +83,10 @@ resource "signalfx_detector" "throttles" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Lambda invocations throttled"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		signal = data('Throttles', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.throttles_aggregation_function}.${var.throttles_transformation_function}(over='${var.throttles_transformation_window}')
-		detect(when(signal > ${var.throttles_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.throttles_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.throttles_threshold_critical}, ‘above’, lasting('${var.throttles_aperiodic_duration}', ${var.throttles_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.throttles_threshold_warning}, ‘above’, lasting('${var.throttles_aperiodic_duration}', ${var.throttles_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -110,9 +113,10 @@ resource "signalfx_detector" "invocations" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Lambda number of invocations"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		signal = data('Invocations', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.invocations_aggregation_function}.${var.invocations_transformation_function}(over='${var.invocations_transformation_window}')
-		detect(when(signal <= ${var.invocations_threshold_critical})).publish('CRIT')
-		detect(when(signal <= ${var.invocations_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.invocations_threshold_critical}, ‘above’, lasting('${var.invocations_aperiodic_duration}', ${var.invocations_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.invocations_threshold_warning}, ‘above’, lasting('${var.invocations_aperiodic_duration}', ${var.invocations_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {

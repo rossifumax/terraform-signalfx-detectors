@@ -59,67 +59,67 @@ variable "heartbeat_timeframe" {
 # No_healthy_instances detectors
 
 variable "no_healthy_instances_disabled" {
-  description = "Disable all alerting rules for no healthy instances detector"
+  description = "Disable all alerting rules for No_healthy_instances detector"
   type        = bool
   default     = null
 }
 
 variable "no_healthy_instances_disabled_critical" {
-  description = "Disable critical alerting rule for no healthy instances detector"
+  description = "Disable critical alerting rule for No_healthy_instances detector"
   type        = bool
   default     = null
 }
 
 variable "no_healthy_instances_disabled_warning" {
-  description = "Disable warning alerting rule for no healthy instances detector"
+  description = "Disable warning alerting rule for No_healthy_instances detector"
   type        = bool
   default     = null
 }
 
 variable "no_healthy_instances_notifications" {
-  description = "Notification recipients list for every alerting rules of no healthy instances detector"
+  description = "Notification recipients list for every alerting rules of No_healthy_instances detector"
   type        = list
   default     = []
 }
 
 variable "no_healthy_instances_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of no healthy instances detector"
+  description = "Notification recipients list for warning alerting rule of No_healthy_instances detector"
   type        = list
   default     = []
 }
 
 variable "no_healthy_instances_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of no healthy instances detector"
+  description = "Notification recipients list for critical alerting rule of No_healthy_instances detector"
   type        = list
   default     = []
 }
 
 variable "no_healthy_instances_aggregation_function" {
-  description = "Aggregation function and group by for no healthy instances detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for No_healthy_instances detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".sum(by=['aws_region', 'LoadBalancer'])"
 }
 
 variable "no_healthy_instances_transformation_function" {
-  description = "Transformation function for no healthy instances detector (mean, min, max)"
+  description = "Transformation function for No_healthy_instances detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
 variable "no_healthy_instances_transformation_window" {
-  description = "Transformation window for no healthy instances detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for No_healthy_instances detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
 variable "no_healthy_instances_threshold_critical" {
-  description = "Critical threshold for no healthy instances detector"
+  description = "Critical threshold for No_healthy_instances detector"
   type        = number
   default     = 1
 }
 
 variable "no_healthy_instances_threshold_warning" {
-  description = "Warning threshold for no healthy instances detector"
+  description = "Warning threshold for No_healthy_instances detector"
   type        = number
   default     = 100
 }
@@ -195,271 +195,295 @@ variable "latency_threshold_warning" {
 # Httpcode_5xx detectors
 
 variable "httpcode_5xx_disabled" {
-  description = "Disable all alerting rules for httpcode 5xx detector"
+  description = "Disable all alerting rules for httpcode_5xx detector"
   type        = bool
   default     = null
 }
 
 variable "httpcode_5xx_disabled_critical" {
-  description = "Disable critical alerting rule for httpcode 5xx detector"
+  description = "Disable critical alerting rule for httpcode_5xx detector"
   type        = bool
   default     = null
 }
 
 variable "httpcode_5xx_disabled_warning" {
-  description = "Disable warning alerting rule for httpcode 5xx detector"
+  description = "Disable warning alerting rule for httpcode_5xx detector"
   type        = bool
   default     = null
 }
 
 variable "httpcode_5xx_notifications" {
-  description = "Notification recipients list for every alerting rules of httpcode 5xx detector"
+  description = "Notification recipients list for every alerting rules of httpcode_5xx detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_5xx_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of httpcode 5xx detector"
+  description = "Notification recipients list for warning alerting rule of httpcode_5xx detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_5xx_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of httpcode 5xx detector"
+  description = "Notification recipients list for critical alerting rule of httpcode_5xx detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_5xx_aggregation_function" {
-  description = "Aggregation function and group by for httpcode 5xx detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for httpcode_5xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['aws_region','LoadBalancer'])"
 }
 
 variable "httpcode_5xx_transformation_function" {
-  description = "Transformation function for httpcode 5xx detector (mean, min, max)"
+  description = "Transformation function for httpcode_5xx detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
 variable "httpcode_5xx_transformation_window" {
-  description = "Transformation window for httpcode 5xx detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for httpcode_5xx detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
 variable "httpcode_5xx_threshold_critical" {
-  description = "Critical threshold for httpcode 5xx detector"
+  description = "Critical threshold for httpcode_5xx detector"
   type        = number
   default     = 80
 }
 
 variable "httpcode_5xx_threshold_warning" {
-  description = "Warning threshold for httpcode 5xx detector"
+  description = "Warning threshold for httpcode_5xx detector"
   type        = number
   default     = 60
+}
+
+variable "httpcode_5xx_threshold_number_requests" {
+  description = "Number threshold for httpcode_5xx detector"
+  type        = number
+  default     = 5
 }
 
 # Httpcode_4xx detectors
 
 variable "httpcode_4xx_disabled" {
-  description = "Disable all alerting rules for httpcode 4xx detector"
+  description = "Disable all alerting rules for httpcode_4xx detector"
   type        = bool
   default     = null
 }
 
 variable "httpcode_4xx_disabled_critical" {
-  description = "Disable critical alerting rule for httpcode 4xx detector"
+  description = "Disable critical alerting rule for httpcode_4xx detector"
   type        = bool
   default     = null
 }
 
 variable "httpcode_4xx_disabled_warning" {
-  description = "Disable warning alerting rule for httpcode 4xx detector"
+  description = "Disable warning alerting rule for httpcode_4xx detector"
   type        = bool
   default     = null
 }
 
 variable "httpcode_4xx_notifications" {
-  description = "Notification recipients list for every alerting rules of httpcode 4xx detector"
+  description = "Notification recipients list for every alerting rules of httpcode_4xx detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_4xx_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of httpcode 4xx detector"
+  description = "Notification recipients list for warning alerting rule of httpcode_4xx detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_4xx_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of httpcode 4xx detector"
+  description = "Notification recipients list for critical alerting rule of httpcode_4xx detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_4xx_aggregation_function" {
-  description = "Aggregation function and group by for httpcode 4xx detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for httpcode_4xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['aws_region','LoadBalancer'])"
 }
 
 variable "httpcode_4xx_transformation_function" {
-  description = "Transformation function for httpcode 4xx detector (mean, min, max)"
+  description = "Transformation function for httpcode_4xx detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
 variable "httpcode_4xx_transformation_window" {
-  description = "Transformation window for httpcode 4xx detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for httpcode_4xx detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
 variable "httpcode_4xx_threshold_critical" {
-  description = "Critical threshold for httpcode 4xx detector"
+  description = "Critical threshold for httpcode_4xx detector"
   type        = number
   default     = 80
 }
 
 variable "httpcode_4xx_threshold_warning" {
-  description = "Warning threshold for httpcode 4xx detector"
+  description = "Warning threshold for httpcode_4xx detector"
   type        = number
   default     = 60
+}
+
+variable "httpcode_4xx_threshold_number_requests" {
+  description = "Number threshold for httpcode_4xx detector"
+  type        = number
+  default     = 5
 }
 
 # Httpcode_target_5xx detectors
 
 variable "httpcode_target_5xx_disabled" {
-  description = "Disable all alerting rules for httpcode target 5xx detector"
+  description = "Disable all alerting rules for httpcode_target_5xx detector"
   type        = bool
   default     = null
 }
 
 variable "httpcode_target_5xx_disabled_critical" {
-  description = "Disable critical alerting rule for httpcode target 5xx detector"
+  description = "Disable critical alerting rule for httpcode_target_5xx detector"
   type        = bool
   default     = null
 }
 
 variable "httpcode_target_5xx_disabled_warning" {
-  description = "Disable warning alerting rule for httpcode target 5xx detector"
+  description = "Disable warning alerting rule for httpcode_target_5xx detector"
   type        = bool
   default     = null
 }
 
 variable "httpcode_target_5xx_notifications" {
-  description = "Notification recipients list for every alerting rules of httpcode target 5xx detector"
+  description = "Notification recipients list for every alerting rules of httpcode_target_5xx detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_target_5xx_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of httpcode target 5xx detector"
+  description = "Notification recipients list for warning alerting rule of httpcode_target_5xx detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_target_5xx_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of httpcode target 5xx detector"
+  description = "Notification recipients list for critical alerting rule of httpcode_target_5xx detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_target_5xx_aggregation_function" {
-  description = "Aggregation function and group by for httpcode target 5xx detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for httpcode_target_5xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['aws_region','LoadBalancer'])"
 }
 
 variable "httpcode_target_5xx_transformation_function" {
-  description = "Transformation function for httpcode target 5xx detector (mean, min, max)"
+  description = "Transformation function for httpcode_target_5xx detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
 variable "httpcode_target_5xx_transformation_window" {
-  description = "Transformation window for httpcode target 5xx detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for httpcode_target_5xx detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
 variable "httpcode_target_5xx_threshold_critical" {
-  description = "Critical threshold for httpcode target 5xx detector"
+  description = "Critical threshold for httpcode_target_5xx detector"
   type        = number
   default     = 80
 }
 
 variable "httpcode_target_5xx_threshold_warning" {
-  description = "Warning threshold for httpcode target 5xx detector"
+  description = "Warning threshold for httpcode_target_5xx detector"
   type        = number
   default     = 60
+}
+
+variable "httpcode_target_5xx_threshold_number_requests" {
+  description = "Number threshold for httpcode_target_5xx detector"
+  type        = number
+  default     = 5
 }
 
 # Httpcode_target_4xx detectors
 
 variable "httpcode_target_4xx_disabled" {
-  description = "Disable all alerting rules for httpcode target 4xx detector"
+  description = "Disable all alerting rules for httpcode_target_4xx detector"
   type        = bool
   default     = null
 }
 
 variable "httpcode_target_4xx_disabled_critical" {
-  description = "Disable critical alerting rule for httpcode target 4xx detector"
+  description = "Disable critical alerting rule for httpcode_target_4xx detector"
   type        = bool
   default     = null
 }
 
 variable "httpcode_target_4xx_disabled_warning" {
-  description = "Disable warning alerting rule for httpcode target 4xx detector"
+  description = "Disable warning alerting rule for httpcode_target_4xx detector"
   type        = bool
   default     = null
 }
 
 variable "httpcode_target_4xx_notifications" {
-  description = "Notification recipients list for every alerting rules of httpcode target 4xx detector"
+  description = "Notification recipients list for every alerting rules of httpcode_target_4xx detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_target_4xx_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of httpcode target 4xx detector"
+  description = "Notification recipients list for warning alerting rule of httpcode_target_4xx detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_target_4xx_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of httpcode target 4xx detector"
+  description = "Notification recipients list for critical alerting rule of httpcode_target_4xx detector"
   type        = list
   default     = []
 }
 
 variable "httpcode_target_4xx_aggregation_function" {
-  description = "Aggregation function and group by for httpcode target 4xx detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for httpcode_target_4xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['aws_region','LoadBalancer'])"
 }
 
 variable "httpcode_target_4xx_transformation_function" {
-  description = "Transformation function for httpcode target 4xx detector (mean, min, max)"
+  description = "Transformation function for httpcode_target_4xx detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
 variable "httpcode_target_4xx_transformation_window" {
-  description = "Transformation window for httpcode target 4xx detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for httpcode_target_4xx detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
 variable "httpcode_target_4xx_threshold_critical" {
-  description = "Critical threshold for httpcode target 4xx detector"
+  description = "Critical threshold for httpcode_target_4xx detector"
   type        = number
   default     = 80
 }
 
 variable "httpcode_target_4xx_threshold_warning" {
-  description = "Warning threshold for httpcode target 4xx detector"
+  description = "Warning threshold for httpcode_target_4xx detector"
   type        = number
   default     = 60
+}
+
+variable "httpcode_target_4xx_threshold_number_requests" {
+  description = "Number threshold for httpcode_target_4xx detector"
+  type        = number
+  default     = 5
 }

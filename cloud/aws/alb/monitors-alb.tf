@@ -86,6 +86,13 @@ resource "signalfx_detector" "httpcode_5xx" {
 		signal = (A/(B + 5)).scale(100).${var.httpcode_5xx_transformation_function}(over='${var.httpcode_5xx_transformation_window}')
 		detect(when(signal > ${var.httpcode_5xx_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.httpcode_5xx_threshold_warning})).publish('WARN')
+
+		from signalfx.detectors.aperiodic import aperiodic
+		A = data('HTTPCode_ELB_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_5xx_aggregation_function}
+		B = data('RequestCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_5xx_aggregation_function}
+		signal = (A/B).scale(100).${var.httpcode_5xx_transformation_function}(over='${var.httpcode_5xx_transformation_window}')
+		detect(when(signal > ${var.httpcode_5xx_threshold_critical}) and when(B > ${var.httpcode_5xx_threshold_number_requests})).publish('CRIT')
+		detect(when(signal > ${var.httpcode_5xx_threshold_warning}) and when(B > ${var.httpcode_5xx_threshold_number_requests})).publish('WARN')
 	EOF
 
 	rule {
@@ -112,11 +119,11 @@ resource "signalfx_detector" "httpcode_4xx" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB HTTP code 4xx"
 
 	program_text = <<-EOF
-		A = data('HTTPCode_ELB_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}){var.httpcode_4xx_aggregation_function}
-		B = data('RequestCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}){var.httpcode_4xx_aggregation_function}
-		signal = (A/(B + 5)).scale(100).${var.httpcode_4xx_transformation_function}(over='${var.httpcode_4xx_transformation_window}')
-		detect(when(signal > ${var.httpcode_4xx_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.httpcode_4xx_threshold_warning})).publish('WARN')
+		A = data('HTTPCode_ELB_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_4xx_aggregation_function}
+		B = data('RequestCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_4xx_aggregation_function}
+		signal = (A/B).scale(100).${var.httpcode_4xx_transformation_function}(over='${var.httpcode_4xx_transformation_window}')
+		detect(when(signal > ${var.httpcode_4xx_threshold_critical}) and when(B > ${var.httpcode_4xx_threshold_number_requests})).publish('CRIT')
+		detect(when(signal > ${var.httpcode_4xx_threshold_warning}) and when(B > ${var.httpcode_4xx_threshold_number_requests})).publish('WARN')
 	EOF
 
 	rule {
@@ -143,11 +150,11 @@ resource "signalfx_detector" "httpcode_target_5xx" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB target HTTP code 5xx"
 
 	program_text = <<-EOF
-		A = data('HTTPCode_Target_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}){var.httpcode_target_5xx_aggregation_function}
-		B = data('RequestCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}){var.httpcode_target_5xx_aggregation_function}
-		signal = (A/(B + 5)).scale(100).${var.httpcode_target_5xx_transformation_function}(over='${var.httpcode_target_5xx_transformation_window}')
-		detect(when(signal > ${var.httpcode_target_5xx_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.httpcode_target_5xx_threshold_warning})).publish('WARN')
+		A = data('HTTPCode_Target_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_target_5xx_aggregation_function}
+		B = data('RequestCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_target_5xx_aggregation_function}
+		signal = (A/B).scale(100).${var.httpcode_target_5xx_transformation_function}(over='${var.httpcode_target_5xx_transformation_window}')
+		detect(when(signal > ${var.httpcode_target_5xx_threshold_critical}) and when(B > ${var.httpcode_target_5xx_threshold_number_requests})).publish('CRIT')
+		detect(when(signal > ${var.httpcode_target_5xx_threshold_warning}) and when(B > ${var.httpcode_target_5xx_threshold_number_requests})).publish('WARN')
 	EOF
 
 	rule {
@@ -174,11 +181,11 @@ resource "signalfx_detector" "httpcode_target_4xx" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB target HTTP code 4xx"
 
 	program_text = <<-EOF
-		A = data('HTTPCode_Target_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}){var.httpcode_target_4xx_aggregation_function}
-		B = data('RequestCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}){var.httpcode_target_4xx_aggregation_function}
+		A = data('HTTPCode_Target_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_target_4xx_aggregation_function}
+		B = data('RequestCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_target_4xx_aggregation_function}
 		signal = (A/B).scale(100).${var.httpcode_target_4xx_transformation_function}(over='${var.httpcode_target_4xx_transformation_window}')
-		detect(when(signal > ${var.httpcode_target_4xx_threshold_critical}) and when(B > ${var.httpcode_target_4xx_min_request_count})).publish('CRIT')
-		detect(when(signal > ${var.httpcode_target_4xx_threshold_warning})and when(B > ${var.httpcode_target_4xx_min_request_count})).publish('WARN')
+		detect(when(signal > ${var.httpcode_target_4xx_threshold_critical}) and when(B > ${var.httpcode_target_4xx_threshold_number_requests})).publish('CRIT')
+		detect(when(signal > ${var.httpcode_target_4xx_threshold_warning}) and when(B > ${var.httpcode_target_4xx_threshold_number_requests})).publish('WARN')
 	EOF
 
 	rule {

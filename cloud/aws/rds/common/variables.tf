@@ -183,13 +183,13 @@ variable "free_space_low_transformation_window" {
 variable "free_space_low_threshold_critical" {
   description = "Critical threshold for free_space_low detector"
   type        = number
-  default     = 10
+  default     = 20
 }
 
 variable "free_space_low_threshold_warning" {
   description = "Warning threshold for free_space_low detector"
   type        = number
-  default     = 20
+  default     = 40
 }
 
 # Replica_lag detectors

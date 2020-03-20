@@ -124,6 +124,80 @@ variable "cluster_status_threshold_warning" {
   default     = 1
 }
 
+# Free_space detectors
+
+variable "free_space_disabled" {
+  description = "Disable all alerting rules for free_space detector"
+  type        = bool
+  default     = null
+}
+
+variable "free_space_disabled_critical" {
+  description = "Disable critical alerting rule for free_space detector"
+  type        = bool
+  default     = null
+}
+
+variable "free_space_disabled_warning" {
+  description = "Disable warning alerting rule for free_space detector"
+  type        = bool
+  default     = null
+}
+
+variable "free_space_notifications" {
+  description = "Notification recipients list for every alerting rules of free_space detector"
+  type        = list
+  default     = []
+}
+
+variable "free_space_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of free_space detector"
+  type        = list
+  default     = []
+}
+
+variable "free_space_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of free_space detector"
+  type        = list
+  default     = []
+}
+
+variable "free_space_aggregation_function" {
+  description = "Aggregation function and group by for free_space detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['aws_region'])"
+}
+
+variable "free_space_transformation_function" {
+  description = "Transformation function for free_space detector (mean, min, max)"
+  type        = string
+  default     = "max"
+}
+
+variable "free_space_transformation_window" {
+  description = "Transformation window for free_space detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "15m"
+}
+
+variable "free_space_threshold_critical" {
+  description = "Critical threshold for free_space detector"
+  type        = number
+  default     = 10
+}
+
+variable "free_space_threshold_warning" {
+  description = "Warning threshold for free_space detector"
+  type        = number
+  default     = 20
+}
+
+variable "free_space_volume" {
+  description = "Volume size for free_space detector"
+  type        = number
+  default     = 1
+}
+
 # CPU_90_15min detectors
 
 variable "cpu_90_15min_disabled" {
@@ -139,7 +213,7 @@ variable "cpu_90_15min_disabled_critical" {
 }
 
 variable "cpu_90_15min_disabled_warning" {
-  description = "Disable warning alerting rule for httpcode 5xx erros detector"
+  description = "Disable warning alerting rule for cpu_90_15min detector"
   type        = bool
   default     = null
 }

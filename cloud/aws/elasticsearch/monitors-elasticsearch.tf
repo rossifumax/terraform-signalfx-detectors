@@ -4,7 +4,7 @@ resource "signalfx_detector" "heartbeat" {
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('Nodes', filter=filter('namespace', 'AWS/ES') and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['ClusterName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		not_reporting.detector(stream=signal, resource_identifier=['Nodes'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -52,7 +52,7 @@ resource "signalfx_detector" "free_space" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElasticSearch cluster free storage space"
 
 	program_text = <<-EOF
-		A = data('FreeStorageSpace', filter=filter('namespace', 'AWS/ES')and ${module.filter-tags.filter_custom})${var.free_space_aggregation_function}
+		A = data('FreeStorageSpace', filter=filter('namespace', 'AWS/ES')and ${module.filter-tags.filter_custom}).sum(by=['Nodes'])${var.free_space_aggregation_function}
 		signal = ((A/${var.free_space_volume})*100).${var.free_space_transformation_function}(over='${var.free_space_transformation_window}')
 		detect(when(signal < ${var.free_space_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.free_space_threshold_warning})).publish('WARN')
@@ -82,7 +82,7 @@ resource "signalfx_detector" "cpu_90_15min" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElasticSearch cluster CPU"
 
 	program_text = <<-EOF
-		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ES')and ${module.filter-tags.filter_custom})${var.cpu_90_15min_aggregation_function}.${var.cpu_90_15min_transformation_function}(over='${var.cpu_90_15min_transformation_window}')
+		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ES')and ${module.filter-tags.filter_custom}).sum(by=['Nodes'])${var.cpu_90_15min_aggregation_function}.${var.cpu_90_15min_transformation_function}(over='${var.cpu_90_15min_transformation_window}')
 		detect(when(signal > ${var.cpu_90_15min_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.cpu_90_15min_threshold_warning})).publish('WARN')
 	EOF

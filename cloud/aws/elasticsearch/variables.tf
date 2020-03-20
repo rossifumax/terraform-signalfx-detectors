@@ -165,7 +165,7 @@ variable "free_space_notifications_critical" {
 variable "free_space_aggregation_function" {
   description = "Aggregation function and group by for free_space detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region'])"
+  default     = ""
 }
 
 variable "free_space_transformation_function" {
@@ -239,7 +239,7 @@ variable "cpu_90_15min_notifications_critical" {
 variable "cpu_90_15min_aggregation_function" {
   description = "Aggregation function and group by for cpu_90_15min detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region'])"
+  default     = ""
 }
 
 variable "cpu_90_15min_transformation_function" {

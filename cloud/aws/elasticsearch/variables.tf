@@ -97,7 +97,7 @@ variable "cluster_status_notifications_critical" {
 variable "cluster_status_aggregation_function" {
   description = "Aggregation function and group by for cluster_status detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region'])"
+  default     = ".mean()"
 }
 
 variable "cluster_status_transformation_function" {

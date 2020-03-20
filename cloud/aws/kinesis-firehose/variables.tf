@@ -121,5 +121,5 @@ variable "incoming_records_threshold_critical" {
 variable "incoming_records_threshold_warning" {
   description = "Warning threshold for incoming_records detector"
   type        = number
-  default     = 0
+  default     = 1
 }

@@ -52,8 +52,7 @@ resource "signalfx_detector" "free_space" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElasticSearch cluster free storage space"
 
 	program_text = <<-EOF
-		A = data('FreeStorageSpace', filter=filter('namespace', 'AWS/ES')and ${module.filter-tags.filter_custom}).sum(by=['Nodes'])${var.free_space_aggregation_function}
-		signal = ((A/${var.free_space_volume})*100).${var.free_space_transformation_function}(over='${var.free_space_transformation_window}')
+		signal = data('FreeStorageSpace', filter=filter('namespace', 'AWS/ES') and ${module.filter-tags.filter_custom}).sum(by=['Nodes'])${var.free_space_aggregation_function}.${var.free_space_transformation_function}(over='${var.free_space_transformation_window}')
 		detect(when(signal < ${var.free_space_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.free_space_threshold_warning})).publish('WARN')
 	EOF

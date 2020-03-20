@@ -77,7 +77,7 @@ variable "aurora_mysql_replica_lag_notifications_critical" {
 variable "aurora_mysql_replica_lag_aggregation_function" {
   description = "Aggregation function and group by for aurora_mysql_replica_lag detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region', 'DBInstanceIdentifier'])"
+  default     = ".mean(by=['DBInstanceIdentifier'])"
 }
 
 variable "aurora_mysql_replica_lag_transformation_function" {

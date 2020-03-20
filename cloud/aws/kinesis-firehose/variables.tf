@@ -97,7 +97,7 @@ variable "incoming_records_notifications_critical" {
 variable "incoming_records_aggregation_function" {
   description = "Aggregation function and group by for incoming_records detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region','StreamName'])"
+  default     = ".mean(by=['StreamName'])"
 }
 
 variable "incoming_records_transformation_function" {

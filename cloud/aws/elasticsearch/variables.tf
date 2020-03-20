@@ -183,19 +183,13 @@ variable "free_space_transformation_window" {
 variable "free_space_threshold_critical" {
   description = "Critical threshold for free_space detector"
   type        = number
-  default     = 10
+  default     = 20
 }
 
 variable "free_space_threshold_warning" {
   description = "Warning threshold for free_space detector"
   type        = number
-  default     = 20
-}
-
-variable "free_space_volume" {
-  description = "Volume size for free_space detector"
-  type        = number
-  default     = 1
+  default     = 40
 }
 
 # CPU_90_15min detectors

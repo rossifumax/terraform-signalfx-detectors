@@ -3,8 +3,8 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('gauge.cluster.active-shards', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		signal = data('Nodes', filter=filter('namespace', 'AWS/ES') and ${module.filter-tags.filter_custom})
+		not_reporting.detector(stream=signal, resource_identifier=['ClusterName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {

@@ -23,24 +23,14 @@ resource "signalfx_detector" "VPN_status" {
 	program_text = <<-EOF
 		signal = data('TunnelState', filter=filter('namespace', 'AWS/VPN') and filter('stat', 'lower') and ${module.filter-tags.filter_custom})${var.vpn_status_aggregation_function}.${var.vpn_status_transformation_function}(over='${var.vpn_status_transformation_window}')
 		detect(when(signal < ${var.vpn_status_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.vpn_status_threshold_warning})).publish('WARN')
 	EOF
 
 	rule {
-		description           = "is too low < ${var.vpn_status_threshold_critical}"
+		description           = "is reporting a state other then up"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.vpn_status_disabled_critical, var.vpn_status_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.vpn_status_notifications_critical, var.vpn_status_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-	}
-
-	rule {
-		description           = "is too low < ${var.vpn_status_threshold_warning}"
-		severity              = "Warning"
-		detect_label          = "WARN"
-		disabled              = coalesce(var.vpn_status_disabled_warning, var.vpn_status_disabled, var.detectors_disabled)
-		notifications         = coalescelist(var.vpn_status_notifications_warning, var.vpn_status_notifications, var.notifications)
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 

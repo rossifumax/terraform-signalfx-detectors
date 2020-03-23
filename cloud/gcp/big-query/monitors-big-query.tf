@@ -1,3 +1,22 @@
+resource "signalfx_detector" "heartbeat" {
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP Bigquery heartbeat"
+
+	program_text = <<-EOF
+		from signalfx.detectors.not_reporting import not_reporting
+		signal = data('slots/allocated_for_project_and_job_type' and ${module.filter-tags.filter_custom})
+		not_reporting.detector(stream=signal, resource_identifier=['dataset_id'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+	EOF
+
+	rule {
+		description           = "has not reported in ${var.heartbeat_timeframe}"
+		severity              = "Critical"
+		detect_label          = "CRIT"
+		disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
+		notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
+	}
+}
+
 resource "signalfx_detector" "concurrent_queries" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP Bigquery concurrent queries"
 

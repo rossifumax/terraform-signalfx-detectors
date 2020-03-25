@@ -152,7 +152,7 @@ resource "signalfx_detector" "httpcode_target_5xx" {
 	EOF
 
 	rule {
-		description           = "are too high > ${var.httpcode_target_5xx_threshold_critical}"
+ 		description           = "are too high > ${var.httpcode_target_5xx_threshold_critical}%"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.httpcode_target_5xx_disabled_critical, var.httpcode_target_5xx_disabled, var.detectors_disabled)

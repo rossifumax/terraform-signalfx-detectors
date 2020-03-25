@@ -3,7 +3,7 @@ resource "signalfx_detector" "sending_operations" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and ${module.filter-tags.filter_custom})${var.sending_operations_aggregation_function}.${var.sending_operations_transformation_function}(over='${var.sending_operations_transformation_window}')
+		signal = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and ${module.filter-tags.filter_custom})${var.sending_operations_aggregation_function}.${var.sending_operations_transformation_function}(over='${var.sending_operations_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.sending_operations_threshold_critical}, 'below', lasting('${var.sending_operations_aperiodic_duration}', ${var.sending_operations_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.sending_operations_threshold_warning}, 'below', lasting('${var.sending_operations_aperiodic_duration}', ${var.sending_operations_aperiodic_percentage})).publish('WARN')
 	EOF
@@ -33,7 +33,7 @@ resource "signalfx_detector" "unavailable_sending_operations" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and filter('response_code', 'unavailable') and ${module.filter-tags.filter_custom})${var.unavailable_sending_operations_aggregation_function}.${var.unavailable_sending_operations_transformation_function}(over='${var.unavailable_sending_operations_transformation_window}')
+		signal = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and filter('response_code', 'unavailable') and ${module.filter-tags.filter_custom})${var.unavailable_sending_operations_aggregation_function}.${var.unavailable_sending_operations_transformation_function}(over='${var.unavailable_sending_operations_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.unavailable_sending_operations_threshold_critical}, 'above', lasting('${var.unavailable_sending_operations_aperiodic_duration}', ${var.unavailable_sending_operations_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.unavailable_sending_operations_threshold_warning}, 'above', lasting('${var.unavailable_sending_operations_aperiodic_duration}', ${var.unavailable_sending_operations_aperiodic_percentage})).publish('WARN')
 	EOF
@@ -65,7 +65,7 @@ resource "signalfx_detector" "unavailable_sending_operations_ratio" {
 		from signalfx.detectors.aperiodic import aperiodic
 		A = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and filter('response_code', 'unavailable') and ${module.filter-tags.filter_custom})${var.unavailable_sending_operations_ratio_aggregation_function}
 		B = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and ${module.filter-tags.filter_custom})${var.unavailable_sending_operations_ratio_aggregation_function}
-		signal = ((100*A)/B).${var.unavailable_sending_operations_ratio_transformation_function}(over='${var.unavailable_sending_operations_ratio_transformation_window}')
+		signal = ((100*A)/B).${var.unavailable_sending_operations_ratio_transformation_function}(over='${var.unavailable_sending_operations_ratio_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.unavailable_sending_operations_ratio_threshold_critical}, 'above', lasting('${var.unavailable_sending_operations_ratio_aperiodic_duration}', ${var.unavailable_sending_operations_ratio_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.unavailable_sending_operations_ratio_threshold_warning}, 'above', lasting('${var.unavailable_sending_operations_ratio_aperiodic_duration}', ${var.unavailable_sending_operations_ratio_aperiodic_percentage})).publish('WARN')
 	EOF

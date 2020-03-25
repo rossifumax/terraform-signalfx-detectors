@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('instance/cpu/usage_time' and ${module.filter-tags.filter_custom})
+		signal = data('instance/cpu/usage_time' and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['instance_name'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -22,7 +22,7 @@ resource "signalfx_detector" "cpu_utilization" {
 
 	program_text = <<-EOF
 		A = data('instance/cpu/utilization' and ${module.filter-tags.filter_custom})${var.cpu_utilization_aggregation_function}
-		signal = (A*100).${var.cpu_utilization_transformation_function}(over='${var.cpu_utilization_transformation_window}')
+		signal = (A*100).${var.cpu_utilization_transformation_function}(over='${var.cpu_utilization_transformation_window}').publish('signal')
 		detect(when(signal > ${var.cpu_utilization_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.cpu_utilization_threshold_warning})).publish('WARN')
 	EOF
@@ -54,7 +54,7 @@ resource "signalfx_detector" "disk_throttled_bps" {
 		B = data('instance/disk/throttled_write_bytes_count' and ${module.filter-tags.filter_custom})${var.disk_throttled_bps_aggregation_function}
 		C = data('instance/disk/read_bytes_count' and ${module.filter-tags.filter_custom})${var.disk_throttled_bps_aggregation_function}
 		D = data('instance/disk/write_bytes_count' and ${module.filter-tags.filter_custom})${var.disk_throttled_bps_aggregation_function}
-		signal = ((A+B)/(C+D)).scale(100).${var.disk_throttled_bps_transformation_function}(over='${var.disk_throttled_bps_transformation_window}')
+		signal = ((A+B)/(C+D)).scale(100).${var.disk_throttled_bps_transformation_function}(over='${var.disk_throttled_bps_transformation_window}').publish('signal')
 		detect(when(signal > ${var.disk_throttled_bps_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.disk_throttled_bps_threshold_warning})).publish('WARN')
 	EOF
@@ -86,7 +86,7 @@ resource "signalfx_detector" "disk_throttled_ops" {
 		B = data('instance/disk/throttled_write_ops_count' and ${module.filter-tags.filter_custom})${var.disk_throttled_ops_aggregation_function}
 		C = data('instance/disk/read_ops_count' and ${module.filter-tags.filter_custom})${var.disk_throttled_ops_aggregation_function}
 		D = data('instance/disk/write_ops_count' and ${module.filter-tags.filter_custom})${var.disk_throttled_ops_aggregation_function}
-		signal = ((A+B)/(C+D)).scale(100).${var.disk_throttled_ops_transformation_function}(over='${var.disk_throttled_ops_transformation_window}')
+		signal = ((A+B)/(C+D)).scale(100).${var.disk_throttled_ops_transformation_function}(over='${var.disk_throttled_ops_transformation_window}').publish('signal')
 		detect(when(signal > ${var.disk_throttled_ops_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.disk_throttled_ops_threshold_warning})).publish('WARN')
 	EOF

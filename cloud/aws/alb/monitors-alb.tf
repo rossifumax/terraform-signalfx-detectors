@@ -29,7 +29,7 @@ resource "signalfx_detector" "no_healthy_instances" {
 	EOF
 
 	rule {
-		description           = "are too low < ${var.no_healthy_instances_threshold_critical}"
+ 		description           = "count has fallen below critical capacity < ${var.no_healthy_instances_threshold_critical}%"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.no_healthy_instances_disabled_critical, var.no_healthy_instances_disabled, var.detectors_disabled)

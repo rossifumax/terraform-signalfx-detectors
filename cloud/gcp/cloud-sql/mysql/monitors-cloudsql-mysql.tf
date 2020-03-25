@@ -2,7 +2,7 @@ resource "signalfx_detector" "replication_lag" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Cloud SQL MySQL replication lag"
 
 	program_text = <<-EOF
-		signal = data('database/mysql/replication/seconds_behind_master' and ${module.filter-tags.filter_custom})${var.replication_lag_aggregation_function}.${var.replication_lag_transformation_function}(over='${var.replication_lag_transformation_window}')
+		signal = data('database/mysql/replication/seconds_behind_master' and ${module.filter-tags.filter_custom})${var.replication_lag_aggregation_function}.${var.replication_lag_transformation_function}(over='${var.replication_lag_transformation_window}').publish('signal')
 		detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.replication_lag_threshold_warning})).publish('WARN')
 	EOF

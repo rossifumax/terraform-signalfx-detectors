@@ -19,7 +19,7 @@ resource "signalfx_detector" "heartbeat" {
 
 # Monitoring Api Gateway latency
 resource "signalfx_detector" "latency" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ApiGateway latency"
+ 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ApiGateway latency"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic

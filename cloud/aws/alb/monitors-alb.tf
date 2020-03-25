@@ -99,7 +99,7 @@ resource "signalfx_detector" "httpcode_5xx" {
 	}
 
 	rule {
-		description           = "are too high > ${var.httpcode_5xx_threshold_warning}"
+ 		description           = "are too high > ${var.httpcode_5xx_threshold_warning}%"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.httpcode_5xx_disabled_warning, var.httpcode_5xx_disabled, var.detectors_disabled)

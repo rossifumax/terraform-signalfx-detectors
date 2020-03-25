@@ -38,7 +38,7 @@ resource "signalfx_detector" "no_healthy_instances" {
 	}
 
 	rule {
-		description           = "are too low < ${var.no_healthy_instances_threshold_warning}"
+ 		description           = "count is below nominal capacity < ${var.no_healthy_instances_threshold_warning}%"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.no_healthy_instances_disabled_warning, var.no_healthy_instances_disabled, var.detectors_disabled)

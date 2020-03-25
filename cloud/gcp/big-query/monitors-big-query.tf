@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('slots/allocated_for_project_and_job_type' and ${module.filter-tags.filter_custom})
+		signal = data('slots/allocated_for_project_and_job_type' and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['dataset_id'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -22,7 +22,7 @@ resource "signalfx_detector" "concurrent_queries" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('query/count' and ${module.filter-tags.filter_custom})${var.concurrent_queries_aggregation_function}.${var.concurrent_queries_transformation_function}(over='${var.concurrent_queries_transformation_window}')
+		signal = data('query/count' and ${module.filter-tags.filter_custom})${var.concurrent_queries_aggregation_function}.${var.concurrent_queries_transformation_function}(over='${var.concurrent_queries_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.concurrent_queries_threshold_critical}, ‘above’, lasting('${var.concurrent_queries_aperiodic_duration}', ${var.concurrent_queries_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.concurrent_queries_threshold_warning}, ‘above’, lasting('${var.concurrent_queries_aperiodic_duration}', ${var.concurrent_queries_aperiodic_percentage})).publish('WARN')
 	EOF
@@ -52,7 +52,7 @@ resource "signalfx_detector" "execution_time" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('query/execution_times' and ${module.filter-tags.filter_custom})${var.execution_time_aggregation_function}.${var.execution_time_transformation_function}(over='${var.execution_time_transformation_window}')
+		signal = data('query/execution_times' and ${module.filter-tags.filter_custom})${var.execution_time_aggregation_function}.${var.execution_time_transformation_function}(over='${var.execution_time_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.execution_time_threshold_critical}, ‘above’, lasting('${var.execution_time_aperiodic_duration}', ${var.execution_time_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.execution_time_threshold_warning}, ‘above’, lasting('${var.execution_time_aperiodic_duration}', ${var.execution_time_aperiodic_percentage})).publish('WARN')
 	EOF
@@ -82,7 +82,7 @@ resource "signalfx_detector" "scanned_bytes" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('query/scanned_bytes' and ${module.filter-tags.filter_custom})${var.scanned_bytes_aggregation_function}.${var.scanned_bytes_transformation_function}(over='${var.scanned_bytes_transformation_window}')
+		signal = data('query/scanned_bytes' and ${module.filter-tags.filter_custom})${var.scanned_bytes_aggregation_function}.${var.scanned_bytes_transformation_function}(over='${var.scanned_bytes_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.scanned_bytes_threshold_critical}, 'above', lasting('${var.scanned_bytes_aperiodic_duration}', ${var.scanned_bytes_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.scanned_bytes_threshold_warning}, 'above', lasting('${var.scanned_bytes_aperiodic_duration}', ${var.scanned_bytes_aperiodic_percentage})).publish('WARN')
 	EOF
@@ -112,7 +112,7 @@ resource "signalfx_detector" "scanned_bytes_billed" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('query/scanned_bytes_billed' and ${module.filter-tags.filter_custom})${var.scanned_bytes_billed_aggregation_function}.${var.scanned_bytes_billed_transformation_function}(over='${var.scanned_bytes_billed_transformation_window}')
+		signal = data('query/scanned_bytes_billed' and ${module.filter-tags.filter_custom})${var.scanned_bytes_billed_aggregation_function}.${var.scanned_bytes_billed_transformation_function}(over='${var.scanned_bytes_billed_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.scanned_bytes_billed_threshold_critical}, 'above', lasting('${var.scanned_bytes_billed_aperiodic_duration}', ${var.scanned_bytes_billed_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.scanned_bytes_billed_threshold_warning}, 'above', lasting('${var.scanned_bytes_billed_aperiodic_duration}', ${var.scanned_bytes_billed_aperiodic_percentage})).publish('WARN')
 	EOF
@@ -142,7 +142,7 @@ resource "signalfx_detector" "available_slots" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('slots/total_available' and ${module.filter-tags.filter_custom})${var.available_slots_aggregation_function}.${var.available_slots_transformation_function}(over='${var.available_slots_transformation_window}')
+		signal = data('slots/total_available' and ${module.filter-tags.filter_custom})${var.available_slots_aggregation_function}.${var.available_slots_transformation_function}(over='${var.available_slots_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.available_slots_threshold_critical}, 'below', lasting('${var.available_slots_aperiodic_duration}', ${var.available_slots_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.available_slots_threshold_warning}, 'below', lasting('${var.available_slots_aperiodic_duration}', ${var.available_slots_aperiodic_percentage})).publish('WARN')
 	EOF
@@ -172,7 +172,7 @@ resource "signalfx_detector" "stored_bytes" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('storage/stored_bytes' and ${module.filter-tags.filter_custom})${var.stored_bytes_aggregation_function}.${var.stored_bytes_transformation_function}(over='${var.stored_bytes_transformation_window}')
+		signal = data('storage/stored_bytes' and ${module.filter-tags.filter_custom})${var.stored_bytes_aggregation_function}.${var.stored_bytes_transformation_function}(over='${var.stored_bytes_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.stored_bytes_threshold_critical}, 'above', lasting('${var.stored_bytes_aperiodic_duration}', ${var.stored_bytes_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.stored_bytes_threshold_warning}, 'above', lasting('${var.stored_bytes_aperiodic_duration}', ${var.stored_bytes_aperiodic_percentage})).publish('WARN')
 	EOF
@@ -202,7 +202,7 @@ resource "signalfx_detector" "table_count" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('storage/table_count' and ${module.filter-tags.filter_custom})${var.table_count_aggregation_function}.${var.table_count_transformation_function}(over='${var.table_count_transformation_window}')
+		signal = data('storage/table_count' and ${module.filter-tags.filter_custom})${var.table_count_aggregation_function}.${var.table_count_transformation_function}(over='${var.table_count_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.table_count_threshold_critical}, 'above', lasting('${var.table_count_aperiodic_duration}', ${var.table_count_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.table_count_threshold_warning}, 'above', lasting('${var.table_count_aperiodic_duration}', ${var.table_count_aperiodic_percentage})).publish('WARN')
 	EOF
@@ -232,7 +232,7 @@ resource "signalfx_detector" "uploaded_bytes" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('storage/uploaded_bytes' and ${module.filter-tags.filter_custom})${var.uploaded_bytes_aggregation_function}.${var.uploaded_bytes_transformation_function}(over='${var.uploaded_bytes_transformation_window}')
+		signal = data('storage/uploaded_bytes' and ${module.filter-tags.filter_custom})${var.uploaded_bytes_aggregation_function}.${var.uploaded_bytes_transformation_function}(over='${var.uploaded_bytes_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.uploaded_bytes_threshold_critical}, 'above', lasting('${var.uploaded_bytes_aperiodic_duration}', ${var.uploaded_bytes_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.uploaded_bytes_threshold_warning}, 'above', lasting('${var.uploaded_bytes_aperiodic_duration}', ${var.uploaded_bytes_aperiodic_percentage})).publish('WARN')
 	EOF
@@ -262,7 +262,7 @@ resource "signalfx_detector" "uploaded_bytes_billed" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('storage/uploaded_bytes_billed' and ${module.filter-tags.filter_custom})${var.uploaded_bytes_billed_aggregation_function}.${var.uploaded_bytes_billed_transformation_function}(over='${var.uploaded_bytes_billed_transformation_window}')
+		signal = data('storage/uploaded_bytes_billed' and ${module.filter-tags.filter_custom})${var.uploaded_bytes_billed_aggregation_function}.${var.uploaded_bytes_billed_transformation_function}(over='${var.uploaded_bytes_billed_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.uploaded_bytes_billed_threshold_critical}, 'above', lasting('${var.uploaded_bytes_billed_aperiodic_duration}', ${var.uploaded_bytes_billed_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.uploaded_bytes_billed_threshold_warning}, 'above', lasting('${var.uploaded_bytes_billed_aperiodic_duration}', ${var.uploaded_bytes_billed_aperiodic_percentage})).publish('WARN')
 	EOF

@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('https/total_latencies' and ${module.filter-tags.filter_custom})
+		signal = data('https/total_latencies' and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['backend_name'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -23,7 +23,7 @@ resource "signalfx_detector" "error_rate_4xx" {
 	program_text = <<-EOF
 		A = data('https/request_count', filter=filter('service', 'loadbalancing') and filter('response_code_class', '400') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.error_rate_4xx_aggregation_function}
 		B = data('https/request_count', filter=filter('service', 'loadbalancing') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.error_rate_4xx_aggregation_function}
-		signal = ((A/B)*100).${var.error_rate_4xx_transformation_function}(over='${var.error_rate_4xx_transformation_window}')
+		signal = ((A/B)*100).${var.error_rate_4xx_transformation_function}(over='${var.error_rate_4xx_transformation_window}').publish('signal')
 		detect(when(signal > ${var.error_rate_4xx_threshold_critical}) and when(B > ${var.error_rate_4xx_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.error_rate_4xx_threshold_warning}) and when(B > ${var.error_rate_4xx_threshold_number_requests})).publish('WARN')
 	EOF
@@ -53,7 +53,7 @@ resource "signalfx_detector" "error_rate_5xx" {
 	program_text = <<-EOF
 		A = data('https/request_count', filter=filter('service', 'loadbalancing') and filter('response_code_class', '500') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.error_rate_5xx_aggregation_function}
 		B = data('https/request_count', filter=filter('service', 'loadbalancing') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.error_rate_5xx_aggregation_function}
-		signal = ((A/(B+5))*100).${var.error_rate_5xx_transformation_function}(over='${var.error_rate_5xx_transformation_window}')
+		signal = ((A/(B+5))*100).${var.error_rate_5xx_transformation_function}(over='${var.error_rate_5xx_transformation_window}').publish('signal')
 		detect(when(signal > ${var.error_rate_5xx_threshold_critical}) and when(B > ${var.error_rate_5xx_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.error_rate_5xx_threshold_warning}) and when(B > ${var.error_rate_5xx_threshold_number_requests})).publish('WARN')
 	EOF
@@ -82,7 +82,7 @@ resource "signalfx_detector" "backend_latency" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('https/backend_latencies ', filter=filter('service', 'loadbalancing') and filter('backend_target_type', 'BACKEND_SERVICE') and ${module.filter-tags.filter_custom})${var.backend_latency_aggregation_function}.${var.backend_latency_transformation_function}(over='${var.backend_latency_transformation_window}')
+		signal = data('https/backend_latencies ', filter=filter('service', 'loadbalancing') and filter('backend_target_type', 'BACKEND_SERVICE') and ${module.filter-tags.filter_custom})${var.backend_latency_aggregation_function}.${var.backend_latency_transformation_function}(over='${var.backend_latency_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.backend_latency_threshold_critical}, ‘above’, lasting('${var.backend_latency_aperiodic_duration}', ${var.backend_latency_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.backend_latency_threshold_warning}, ‘above’, lasting('${var.backend_latency_aperiodic_duration}', ${var.backend_latency_aperiodic_percentage})).publish('WARN')
 	EOF
@@ -111,7 +111,7 @@ resource "signalfx_detector" "backend_latency_bucket" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('https/backend_latencies ', filter=filter('service', 'loadbalancing') and filter('backend_target_type', 'BACKEND_BUCKET') and ${module.filter-tags.filter_custom})${var.backend_latency_bucket_aggregation_function}.${var.backend_latency_bucket_transformation_function}(over='${var.backend_latency_bucket_transformation_window}')
+		signal = data('https/backend_latencies ', filter=filter('service', 'loadbalancing') and filter('backend_target_type', 'BACKEND_BUCKET') and ${module.filter-tags.filter_custom})${var.backend_latency_bucket_aggregation_function}.${var.backend_latency_bucket_transformation_function}(over='${var.backend_latency_bucket_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.backend_latency_bucket_threshold_critical}, ‘above’, lasting('${var.backend_latency_bucket_aperiodic_duration}', ${var.backend_latency_bucket_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.backend_latency_bucket_threshold_warning}, ‘above’, lasting('${var.backend_latency_bucket_aperiodic_duration}', ${var.backend_latency_bucket_aperiodic_percentage})).publish('WARN')
 	EOF
@@ -140,7 +140,7 @@ resource "signalfx_detector" "request_count" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('https/request_count', filter=filter('service', 'loadbalancing') and ${module.filter-tags.filter_custom})${var.request_count_aggregation_function}).rateofchange().${var.request_count_transformation_function}(over='${var.request_count_transformation_window}')
+		signal = data('https/request_count', filter=filter('service', 'loadbalancing') and ${module.filter-tags.filter_custom})${var.request_count_aggregation_function}).rateofchange().${var.request_count_transformation_function}(over='${var.request_count_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.request_count_threshold_critical}, ‘above’, lasting('${var.request_count_aperiodic_duration}', ${var.request_count_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.request_count_threshold_warning}, ‘above’, lasting('${var.request_count_aperiodic_duration}', ${var.request_count_aperiodic_percentage})).publish('WARN')
 	EOF

@@ -91,7 +91,7 @@ resource "signalfx_detector" "throttles" {
 }
 
 resource "signalfx_detector" "invocations" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Lambda number of invocations"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Lambda invocations"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic

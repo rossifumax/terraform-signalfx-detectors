@@ -76,7 +76,7 @@ resource "signalfx_detector" "free_space_low" {
 }
 
 resource "signalfx_detector" "replica_lag" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RDS replica lag"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS RDS replica lag"
 
 	program_text = <<-EOF
 		signal = data('ReplicaLag', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.replica_lag_aggregation_function}.${var.replica_lag_transformation_function}(over='${var.replica_lag_transformation_window}')

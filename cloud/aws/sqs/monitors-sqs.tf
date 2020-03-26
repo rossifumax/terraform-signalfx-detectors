@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "visible_messages" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] SQS Visible messages"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS SQS Visible messages"
 
 	program_text = <<-EOF
 		signal = data('ApproximateNumberOfMessagesVisible', filter=filter('namespace', 'AWS/SQS')and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.visible_messages_aggregation_function}.${var.visible_messages_transformation_function}(over='${var.visible_messages_transformation_window}')

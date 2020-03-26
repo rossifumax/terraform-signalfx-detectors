@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "health" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS beanstalk health"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Beanstalk environment health"
 
 	program_text = <<-EOF
 		signal = data('EnvironmentHealth', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.health_aggregation_function}.${var.health_transformation_function}(over='${var.health_transformation_window}')

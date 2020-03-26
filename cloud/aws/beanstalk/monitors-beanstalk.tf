@@ -107,7 +107,7 @@ resource "signalfx_detector" "5xx_error_rate" {
 }
 
 resource "signalfx_detector" "root_filesystem_usage" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Beanstalk Instance root file system usage"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Beanstalk instance root filesystem usage"
 
 	program_text = <<-EOF
 		signal = data('RootFilesystemUtil', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and filter('InstanceId', '*') and ${module.filter-tags.filter_custom}){var.root_filesystem_usage_aggregation_function}.${var.root_filesystem_usage_transformation_function}(over='${var.root_filesystem_usage_transformation_window}')

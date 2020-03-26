@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "cpu_utilization" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ECS Cluster CPU utilization"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ECS cluster CPU utilization"
 
 	program_text = <<-EOF
 		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ECS')) and filter('stat', 'mean') and not filter('ServiceName', '*') and ${module.filter-tags.filter_custom}).mean(by=['ClusterName'])${var.cpu_utilization_aggregation_function}.${var.cpu_utilization_transformation_function}(over='${var.cpu_utilization_transformation_window}')
@@ -47,7 +47,7 @@ resource "signalfx_detector" "cpu_utilization" {
 }
 
 resource "signalfx_detector" "memory_reservation" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ECS Cluster Memory reservation"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ECS cluster memory reservation"
 
 	program_text = <<-EOF
 		signal = data('MemoryReservation', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and not filter('ServiceName', '*') and ${module.filter-tags.filter_custom}).mean(by=['ClusterName'])${var.memory_reservation_aggregation_function}.${var.memory_reservation_transformation_function}(over='${var.memory_reservation_transformation_window}')

@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "no_healthy_instances" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB healthy instances"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB healthy instances percentage"
 
 	program_text = <<-EOF
 		A = data('HealthyHostCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'lower') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.no_healthy_instances_aggregation_function}
@@ -29,7 +29,7 @@ resource "signalfx_detector" "no_healthy_instances" {
 	EOF
 
 	rule {
- 		description           = "count has fallen below critical capacity < ${var.no_healthy_instances_threshold_critical}%"
+ 		description           = "has fallen below critical capacity < ${var.no_healthy_instances_threshold_critical}%"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.no_healthy_instances_disabled_critical, var.no_healthy_instances_disabled, var.detectors_disabled)
@@ -38,7 +38,7 @@ resource "signalfx_detector" "no_healthy_instances" {
 	}
 
 	rule {
- 		description           = "count is below nominal capacity < ${var.no_healthy_instances_threshold_warning}%"
+ 		description           = "is below nominal capacity < ${var.no_healthy_instances_threshold_warning}%"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.no_healthy_instances_disabled_warning, var.no_healthy_instances_disabled, var.detectors_disabled)
@@ -110,7 +110,7 @@ resource "signalfx_detector" "httpcode_5xx" {
 }
 
 resource "signalfx_detector" "httpcode_4xx" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB 4xx errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB 4xx error rate"
 
 	program_text = <<-EOF
 		A = data('HTTPCode_ELB_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_4xx_aggregation_function}
@@ -141,7 +141,7 @@ resource "signalfx_detector" "httpcode_4xx" {
 }
 
 resource "signalfx_detector" "httpcode_target_5xx" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB target 5xx errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB target 5xx error rate"
 
 	program_text = <<-EOF
 		A = data('HTTPCode_Target_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_target_5xx_aggregation_function}
@@ -172,7 +172,7 @@ resource "signalfx_detector" "httpcode_target_5xx" {
 }
 
 resource "signalfx_detector" "httpcode_target_4xx" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB target 4xx errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB target 4xx error rate"
 
 	program_text = <<-EOF
 		A = data('HTTPCode_Target_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_target_4xx_aggregation_function}

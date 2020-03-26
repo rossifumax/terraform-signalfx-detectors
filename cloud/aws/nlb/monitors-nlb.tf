@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "no_healthy_instances" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] NLB healthy instances"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS NLB healthy instances percentage"
 
 	program_text = <<-EOF
 		A = data('HealthyHostCount', filter=filter('namespace', 'AWS/NetworkELB') and filter('stat', 'lower') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.no_healthy_instances_aggregation_function}

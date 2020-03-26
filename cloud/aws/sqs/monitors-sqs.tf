@@ -47,7 +47,7 @@ resource "signalfx_detector" "visible_messages" {
 }
 
 resource "signalfx_detector" "age_of_oldest_message" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] SQS Age of the oldest message"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS SQS Age of the oldest message"
 
 	program_text = <<-EOF
 		signal = data('ApproximateAgeOfOldestMessage', filter=filter('namespace', 'AWS/SQS') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.age_of_oldest_message_aggregation_function}.${var.age_of_oldest_message_transformation_function}(over='${var.age_of_oldest_message_transformation_window}')

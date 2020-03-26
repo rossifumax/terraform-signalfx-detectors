@@ -79,7 +79,7 @@ resource "signalfx_detector" "latency" {
 }
 
 resource "signalfx_detector" "httpcode_5xx" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB 5xx errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB 5xx errors rate"
 
 	program_text = <<-EOF
 		A = data('HTTPCode_ELB_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_5xx_aggregation_function}

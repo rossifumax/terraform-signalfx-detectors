@@ -1,5 +1,5 @@
 resource "signalfx_detector" "pct_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Lambda Percentage of errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Lambda errors rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic

@@ -142,7 +142,7 @@ resource "signalfx_detector" "too_much_4xx_backend" {
 }
 
 resource "signalfx_detector" "too_much_5xx_backend" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ELB backend 5xx errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ELB backend 5xx error rate"
 
 	program_text = <<-EOF
 		A = data('HTTPCode_Backend_5XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_5xx_backend_aggregation_function}

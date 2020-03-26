@@ -50,7 +50,7 @@ resource "signalfx_detector" "latency" {
 
 # Monitoring API Gateway 5xx errors percent
 resource "signalfx_detector" "http_5xx_errors_count" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ApiGateway HTTP 5xx errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ApiGateway HTTP 5xx errors rate"
 
 	program_text = <<-EOF
 		A = data('5XXError', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*'))and (not filter('Method', '*'))and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.http_5xx_errors_aggregation_function}

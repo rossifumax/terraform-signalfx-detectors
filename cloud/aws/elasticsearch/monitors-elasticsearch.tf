@@ -23,8 +23,8 @@ resource "signalfx_detector" "cluster_status" {
 	program_text = <<-EOF
 		A = data('ClusterStatus.red', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.cluster_status_aggregation_function}.${var.cluster_status_transformation_function}(over='${var.cluster_status_transformation_window}')
 		B = data('ClusterStatus.yellow', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.cluster_status_aggregation_function}.${var.cluster_status_transformation_function}(over='${var.cluster_status_transformation_window}')
-		detect(when(A >= ${var.cluster_status_threshold_critical})).publish('CRIT')
-		detect(when(B >= ${var.cluster_status_threshold_warning})).publish('WARN')
+		detect(when(A >= 1)).publish('CRIT')
+		detect(when(B >= 1)).publish('WARN')
 	EOF
 
 	rule {

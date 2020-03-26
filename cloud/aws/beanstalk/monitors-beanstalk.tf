@@ -47,7 +47,7 @@ resource "signalfx_detector" "health" {
 }
 
 resource "signalfx_detector" "latency_p90" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS beanstalk applicaion latency p90"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Beanstalk application latency p90"
 
 	program_text = <<-EOF
 		signal = data('ApplicationLatencyP90', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and filter('InstanceId', '*') and ${module.filter-tags.filter_custom})${var.latency_p90_aggregation_function}.${var.latency_p90_transformation_function}(over='${var.latency_p90_transformation_window}')

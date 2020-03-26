@@ -49,7 +49,7 @@ resource "signalfx_detector" "no_healthy_instances" {
 }
 
 resource "signalfx_detector" "latency" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB latency"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB latency"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic

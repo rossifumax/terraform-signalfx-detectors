@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "cpu_90_15min" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RDS instance CPU"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS RDS instance CPU"
 
 	program_text = <<-EOF
 		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.cpu_90_15min_aggregation_function}.${var.cpu_90_15min_transformation_function}(over='${var.cpu_90_15min_transformation_window}')

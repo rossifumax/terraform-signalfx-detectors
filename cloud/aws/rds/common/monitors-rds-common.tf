@@ -47,7 +47,7 @@ rule {
 }
 
 resource "signalfx_detector" "free_space_low" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RDS instance free space"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS RDS instance free space"
 
 	program_text = <<-EOF
 		signal = data('FreeStorageSpace', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.free_space_low_aggregation_function}.${var.free_space_low_transformation_function}(over='${var.free_space_low_transformation_window}')

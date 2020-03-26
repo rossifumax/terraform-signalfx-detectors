@@ -50,7 +50,7 @@ resource "signalfx_detector" "latency" {
 
 # Monitoring API Gateway 5xx errors percent
 resource "signalfx_detector" "http_5xx_errors_count" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ApiGateway HTTP 5xx errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ApiGateway HTTP 5xx error rate"
 
 	program_text = <<-EOF
 		A = data('5XXError', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*'))and (not filter('Method', '*'))and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.http_5xx_errors_aggregation_function}
@@ -61,7 +61,7 @@ resource "signalfx_detector" "http_5xx_errors_count" {
 	EOF
 
 	rule {
-		description           = "are too high > ${var.http_5xx_errors_threshold_critical}"
+		description           = "is too high > ${var.http_5xx_errors_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.http_5xx_errors_disabled_critical, var.http_5xx_errors_disabled, var.detectors_disabled)
@@ -70,7 +70,7 @@ resource "signalfx_detector" "http_5xx_errors_count" {
 	}
 
 	rule {
-		description           = "are too high > ${var.http_5xx_errors_threshold_warning}"
+		description           = "is too high > ${var.http_5xx_errors_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.http_5xx_errors_disabled_warning, var.http_5xx_errors_disabled, var.detectors_disabled)
@@ -82,7 +82,7 @@ resource "signalfx_detector" "http_5xx_errors_count" {
 
 # Monitoring API Gateway 4xx errors percent
 resource "signalfx_detector" "http_4xx_errors_count" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ApiGateway HTTP 4xx errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ApiGateway HTTP 4xx error rate"
 
 	program_text = <<-EOF
 		A = data('4XXError', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*'))and (not filter('Method', '*'))and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.http_4xx_errors_aggregation_function}
@@ -102,7 +102,7 @@ resource "signalfx_detector" "http_4xx_errors_count" {
 	}
 
 	rule {
-		description           = "are too high > ${var.http_4xx_errors_threshold_warning}"
+		description           = "is too high > ${var.http_4xx_errors_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.http_4xx_errors_disabled_warning, var.http_4xx_errors_disabled, var.detectors_disabled)

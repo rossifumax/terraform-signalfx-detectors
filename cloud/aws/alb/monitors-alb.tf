@@ -79,7 +79,7 @@ resource "signalfx_detector" "latency" {
 }
 
 resource "signalfx_detector" "httpcode_5xx" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB 5xx errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB 5xx error rate"
 
 	program_text = <<-EOF
 		A = data('HTTPCode_ELB_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_5xx_aggregation_function}
@@ -90,7 +90,7 @@ resource "signalfx_detector" "httpcode_5xx" {
 	EOF
 
 	rule {
-		description           = "are too high > ${var.httpcode_5xx_threshold_critical}"
+		description           = "is too high > ${var.httpcode_5xx_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.httpcode_5xx_disabled_critical, var.httpcode_5xx_disabled, var.detectors_disabled)
@@ -99,7 +99,7 @@ resource "signalfx_detector" "httpcode_5xx" {
 	}
 
 	rule {
- 		description           = "are too high > ${var.httpcode_5xx_threshold_warning}%"
+ 		description           = "is too high > ${var.httpcode_5xx_threshold_warning}%"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.httpcode_5xx_disabled_warning, var.httpcode_5xx_disabled, var.detectors_disabled)

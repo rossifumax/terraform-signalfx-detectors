@@ -31,7 +31,7 @@ resource "signalfx_detector" "pct_errors" {
 }
 
 resource "signalfx_detector" "errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Lambda Number of errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Lambda errors"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic

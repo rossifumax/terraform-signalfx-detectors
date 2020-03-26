@@ -76,7 +76,7 @@ resource "signalfx_detector" "latency_p90" {
 }
 
 resource "signalfx_detector" "5xx_error_rate" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS beanstalk 5xx error rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Beanstalk 5xx error rate"
 
 	program_text = <<-EOF
 		A = data('ApplicationRequests5xx', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'sum') and filter('InstanceId', '*') and ${module.filter-tags.filter_custom}){var.5xx_error_rate_aggregation_function}
